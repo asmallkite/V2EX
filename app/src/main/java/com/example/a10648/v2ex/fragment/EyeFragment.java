@@ -57,7 +57,7 @@ public class EyeFragment extends Fragment {
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);
         viewPager.setAdapter(myFragPaAdapter);
-        
+
         return view;
     }
 
