@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.a10648.v2ex.R;
+import com.example.a10648.v2ex.fragment.EyeFragment;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, " 系统维护中·····", Toast.LENGTH_SHORT).show();
                         if (ic_item_No != 1) {
 
-//                            getSupportFragmentManager().beginTransaction()
-//                                    .add(R.id.container, new BrowserFragment())
-//                                    .commit();
+                            getSupportFragmentManager().beginTransaction()
+                                    .add(R.id.container, new EyeFragment())
+                                    .commit();
                             item.setChecked(true);
                             drawerLayout.closeDrawers();
                             toolbar.setTitle("浏览");
