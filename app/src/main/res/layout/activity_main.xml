@@ -16,6 +16,6 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name=""/>
+        android:name="com.example.a10648.v2ex.fragment.NavigationDrawerFragment"/>
 
 </android.support.v4.widget.DrawerLayout>
