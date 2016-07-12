@@ -17,7 +17,7 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.a);
+//        overridePendingTransition(R.anim.activity_open_enter, R.anim.activity_open_exit);
     }
 
     @Override
