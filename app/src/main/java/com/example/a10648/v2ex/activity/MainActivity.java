@@ -6,11 +6,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.a10648.v2ex.R;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
+    private int ic_item_No;// DrawerLayout中菜单中的索引号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,39 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-//        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-//        view.setNavigationItemSelectedListener();
+        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
+        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.ic_menu_view :
+                        Toast.makeText(MainActivity.this, " 系统维护中·····", Toast.LENGTH_SHORT).show();
+                        if (ic_item_No != 1) {
+
+//                            getSupportFragmentManager().beginTransaction()
+//                                    .add(R.id.container, new BrowserFragment())
+//                                    .commit();
+                            item.setChecked(true);
+                            drawerLayout.closeDrawers();
+                            toolbar.setTitle("浏览");
+                            ic_item_No = 1;
+                        } else drawerLayout.closeDrawers();
+                        break;
+                    case R.id.ic_menu_about :
+                        if (2 != ic_item_No) {
+                            item.setChecked(true);
+                            drawerLayout.closeDrawers();
+                            toolbar.setTitle("关于");
+                            ic_item_No = 2;
+                        }
+                        Toast.makeText(MainActivity.this, "版本 ： 1.22.21", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                return false;
+            }
+
+        });
 
 
 
