@@ -49,10 +49,10 @@ public class EyeFragment extends Fragment {
         titles.add("最新主题");
         titles.add("用户主页");
 
-        Fragment fragment1 = new Fragment();
+        LatestFragment latestFragment = new LatestFragment();
         Fragment fragment2 = new Fragment();
 
-        fragments.add(fragment1);
+        fragments.add(latestFragment);
         fragments.add(fragment2);
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);
