@@ -13,6 +13,8 @@ public class TopicModel {
 
     public String avatar;
 
+    public String username;
+
 
     public TopicModel(String title, String url, String content) {
         this.title = title;
@@ -25,6 +27,14 @@ public class TopicModel {
         this.url = url;
         this.content = content;
         this.avatar = avatar;
+    }
+
+    public TopicModel(String title, String url, String content, String avatar, String username) {
+        this.title = title;
+        this.url = url;
+        this.content = content;
+        this.avatar = avatar;
+        this.username = username;
     }
 
     public String getTitle() {
@@ -57,5 +67,13 @@ public class TopicModel {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

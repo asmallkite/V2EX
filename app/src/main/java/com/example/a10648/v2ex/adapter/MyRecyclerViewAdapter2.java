@@ -61,6 +61,7 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
                 holder.img_view_topic_head.setImageBitmap(loadedImage);
             }
         });
+        holder.txt_view_topic_name.setText(linkList.get(position).getUsername());
         holder.itemView.setTag(linkList.get(position));
 
 
@@ -88,12 +89,14 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     TextView topic_title;
     TextView topic_content;
     SelectorImageView img_view_topic_head;
+    TextView txt_view_topic_name;
 
     public MyViewHolder(View itemView) {
         super(itemView);
         topic_title = (TextView)itemView.findViewById(R.id.txt_view_topic_title);
         topic_content = (TextView) itemView.findViewById(R.id.txt_view_topic_content);
         img_view_topic_head = (SelectorImageView)itemView.findViewById(R.id.img_view_topic_head);
+        txt_view_topic_name = (TextView)itemView.findViewById(R.id.txt_view_topic_name);
 
 
 

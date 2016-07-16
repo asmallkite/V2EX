@@ -103,7 +103,8 @@ public class UserPageFragment  extends Fragment {
                 if(avatar.startsWith("//")){
                     avatar = "http:" + avatar;
                 }
-                TopicModel topicModel = new TopicModel(title, url, content, avatar);
+                String username = jsonObject1.getString("username");
+                TopicModel topicModel = new TopicModel(title, url, content, avatar, username);
 
                 links.add(topicModel);
             }
