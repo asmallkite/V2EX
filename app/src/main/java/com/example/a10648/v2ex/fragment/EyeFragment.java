@@ -1,8 +1,6 @@
 package com.example.a10648.v2ex.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerTabStrip;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EyeFragment extends Fragment {
+public class EyeFragment extends Fragment  {
 
 
     private ViewPager viewPager;
@@ -49,12 +47,15 @@ public class EyeFragment extends Fragment {
 
 
         titles.add("最新主题");
+        titles.add("最热主题");
         titles.add("用户主页");
 
         LatestFragment latestFragment = new LatestFragment();
+        HotFragment hotFragment = new HotFragment(); //最热主题的fragment
         UserPageFragment userPageFragment = new UserPageFragment();
 
         fragments.add(latestFragment);
+        fragments.add(hotFragment);
         fragments.add(userPageFragment);
 
 
@@ -64,5 +65,15 @@ public class EyeFragment extends Fragment {
         return view;
     }
 
-
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+//        inflater.inflate(R.menu.all_node, menu);
+//        MenuItem searchMenuItem = menu.findItem(R.id.menu_all_node_search);
+//        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+//        searchView.setQueryHint("Search for nodes");
+//
+//        return ;
+//
+//    }
 }
