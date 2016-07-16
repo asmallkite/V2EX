@@ -25,13 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class LatestFragment extends Fragment {
     public static final String TAG = "MainActivity";
     List<String> links = new ArrayList<>();
     RecyclerView recyclerView;
+    public static final String LATEST_URL ="https://www.v2ex.com/api/topics/latest.json";
 
 
 
@@ -52,13 +51,16 @@ public class LatestFragment extends Fragment {
         return latest_view;
     }
 
+    /**
+     * 异步执行网络操作
+     */
 
     public class MyTask extends AsyncTask<String, Integer, List<String>> {
 
 
         @Override
         protected List<String> doInBackground(String... params) {
-            String response = HttpConnect.sendRequestWithHttpURLConnection();
+            String response = HttpConnect.sendRequestWithHttpURLConnection(LATEST_URL);
             praseJSONWithJSONObject(response);
             return links;
         }
@@ -94,9 +96,7 @@ public class LatestFragment extends Fragment {
             for (int i =  0; i < jsonArray.length(); i ++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String url = jsonObject.getString("url");
-                Log.d(TAG, "result is that" + url);
                 links.add(url);
-                Log.d(TAG, links.toString());
             }
 
         }catch (Exception e){
@@ -104,8 +104,6 @@ public class LatestFragment extends Fragment {
 
         }
     }
-
-
 
 
 }

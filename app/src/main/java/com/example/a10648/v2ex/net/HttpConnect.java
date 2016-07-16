@@ -13,11 +13,11 @@ import java.net.URL;
  */
 public class HttpConnect {
 
-    public static String sendRequestWithHttpURLConnection(){
+    public static String sendRequestWithHttpURLConnection(String  geturl){
 
         HttpURLConnection connection = null;
         try {
-            URL url = new URL("https://www.v2ex.com/api/topics/latest.json");
+            URL url = new URL(geturl);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(8000);
