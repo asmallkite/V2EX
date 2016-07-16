@@ -11,7 +11,7 @@ import java.net.URL;
 /**
  * Created by 10648 on 2016/7/15 0015.
  */
-public class SendRequestWithHttpURLConnection {
+public class HttpConnect {
 
     public static String sendRequestWithHttpURLConnection(){
 

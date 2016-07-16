@@ -16,15 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
-import com.example.a10648.v2ex.net.SendRequestWithHttpURLConnection;
+import com.example.a10648.v2ex.net.HttpConnect;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +58,7 @@ public class LatestFragment extends Fragment {
 
         @Override
         protected List<String> doInBackground(String... params) {
-            String response = SendRequestWithHttpURLConnection.sendRequestWithHttpURLConnection();
+            String response = HttpConnect.sendRequestWithHttpURLConnection();
             praseJSONWithJSONObject(response);
             return links;
         }
@@ -88,40 +84,6 @@ public class LatestFragment extends Fragment {
     }
 
 
-
-//    private static String sendRequestWithHttpURLConnection(){
-//
-//        HttpURLConnection connection = null;
-//        try {
-//            URL url = new URL("https://www.v2ex.com/api/topics/latest.json");
-//            connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("GET");
-//            connection.setConnectTimeout(8000);
-//            connection.setReadTimeout(8000);
-//            Log.d(TAG, "ok");
-//            InputStream in = connection.getInputStream();
-//            Log.d(TAG, "ok2");
-//
-//
-//            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//            StringBuilder response = new StringBuilder();
-//            String line;
-//            while ((line = reader.readLine()) != null){
-//                response.append(line);
-//            }
-//            return response.toString();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return e.getMessage();
-//        }finally {
-//            if (connection != null){
-//                connection.disconnect();
-//            }
-//        }
-//
-//
-//    }
 
 
 
