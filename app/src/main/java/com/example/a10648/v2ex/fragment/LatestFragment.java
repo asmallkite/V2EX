@@ -107,8 +107,11 @@ public class LatestFragment extends Fragment {
                 }
                 String username = jsonObject1.getString("username");
                 long created = jsonObject.getLong("created");
+                int replies = jsonObject.getInt("replies");
+                JSONObject jsonObject2 = jsonObject.getJSONObject("node");
+                String node_name = jsonObject2.getString("name");
 
-                TopicModel topicModel = new TopicModel(title, url, content, avatar, username, created);
+                TopicModel topicModel = new TopicModel(title, url, content, avatar, username, created, replies, node_name);
 
                 links.add(topicModel);
             }

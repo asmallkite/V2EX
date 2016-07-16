@@ -64,6 +64,8 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
         });
         holder.txt_view_topic_name.setText(linkList.get(position).getUsername());
         holder.txt_view_topic_time.setReferenceTime(linkList.get(position).getCreated());
+        holder.txt_view_topic_replies.setText(String.valueOf(linkList.get(position).getReplies()) + "条 回复");
+        holder.txt_view_topic_node.setText(linkList.get(position).getNodename());
         holder.itemView.setTag(linkList.get(position));
 
 
@@ -93,6 +95,8 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     SelectorImageView img_view_topic_head;
     TextView txt_view_topic_name;
     RelativeTimeTextView txt_view_topic_time;
+    TextView txt_view_topic_replies;
+    TextView txt_view_topic_node;
 
     public MyViewHolder(View itemView) {
         super(itemView);
@@ -101,6 +105,8 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         img_view_topic_head = (SelectorImageView)itemView.findViewById(R.id.img_view_topic_head);
         txt_view_topic_name = (TextView)itemView.findViewById(R.id.txt_view_topic_name);
         txt_view_topic_time = (RelativeTimeTextView)itemView.findViewById(R.id.txt_view_topic_time);
+        txt_view_topic_replies = (TextView)itemView.findViewById(R.id.txt_view_topic_replies);
+        txt_view_topic_node = (TextView)itemView.findViewById(R.id.txt_view_topic_node);
 
 
 

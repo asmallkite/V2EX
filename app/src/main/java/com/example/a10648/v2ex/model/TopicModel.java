@@ -17,6 +17,12 @@ public class TopicModel {
 
     public long created;
 
+    public int replies;
+
+    public String nodename;
+
+
+
 
     public TopicModel(String title, String url, String content, String avatar, String username, long created) {
         this.title = title;
@@ -25,6 +31,17 @@ public class TopicModel {
         this.avatar = avatar;
         this.username = username;
         this.created = created;
+    }
+
+    public TopicModel(String title, String url, String content, String avatar, String username, long created, int replies, String nodename) {
+        this.title = title;
+        this.url = url;
+        this.content = content;
+        this.avatar = avatar;
+        this.username = username;
+        this.created = created;
+        this.replies = replies;
+        this.nodename = nodename;
     }
 
     public String getTitle() {
@@ -73,5 +90,21 @@ public class TopicModel {
 
     public void setCreated(long created) {
         this.created = created;
+    }
+
+    public int getReplies() {
+        return replies;
+    }
+
+    public void setReplies(int replies) {
+        this.replies = replies;
+    }
+
+    public String getNodename() {
+        return nodename;
+    }
+
+    public void setNodename(String nodename) {
+        this.nodename = nodename;
     }
 }
