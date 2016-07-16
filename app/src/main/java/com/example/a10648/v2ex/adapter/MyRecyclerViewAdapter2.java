@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
+import com.example.a10648.v2ex.model.TopicModel;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ import java.util.List;
 public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener{
 
 
-    private List<String> linkList;
+    private List<TopicModel> linkList;
     private Context context;
 
 
-    public MyRecyclerViewAdapter2(List<String> linkList, Context context) {
+    public MyRecyclerViewAdapter2(List<TopicModel> linkList, Context context) {
         this.linkList = linkList;
         this.context = context;
     }
@@ -45,7 +46,8 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.mTv.setText(linkList.get(position));
+        holder.topic_title.setText(linkList.get(position).getTitle());
+        holder.topic_content.setText(linkList.get(position).getContent());
         holder.itemView.setTag(linkList.get(position));
 
     }
@@ -58,23 +60,24 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
     @Override
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(v, (String)v.getTag());
+            mOnItemClickListener.onItemClick(v, (TopicModel)v.getTag());
         }
     }
 
 
     public static interface OnRecycleViewItemClickListener {
-        void onItemClick(View view, String data);
+        void onItemClick(View view, TopicModel data);
     }
 }
 
 class MyViewHolder extends RecyclerView.ViewHolder{
-    TextView mTv;
+    TextView topic_title;
+    TextView topic_content;
 
     public MyViewHolder(View itemView) {
         super(itemView);
-        mTv = (TextView)itemView.findViewById(R.id.RV_item_text);
-//        ButterKnife.inject(this, itemView); //实现效果同上,只有这一句话是不行的，会报空指针异常
+        topic_title = (TextView)itemView.findViewById(R.id.txt_view_topic_title);
+        topic_content = (TextView) itemView.findViewById(R.id.txt_view_topic_content);
 
 
         //下面几行真正实现了RecycleView 中的点击事件
@@ -82,10 +85,6 @@ class MyViewHolder extends RecyclerView.ViewHolder{
             @Override
             public void onClick(View v) {
                 Log.d("MyRecycleViewAdapter", "you click the item");
-//                Toast.makeText(get, "you click the item", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("www.baidu.com"));
-
 
             }
         });
