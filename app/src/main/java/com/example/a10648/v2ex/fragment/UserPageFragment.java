@@ -72,7 +72,6 @@ public class UserPageFragment extends Fragment {
             public void onClick(View v) {
                 EditText searchEdit = (EditText) user_page_view.findViewById(R.id.search_edit);
                 edit_id = searchEdit.getText().toString();
-                Toast.makeText(getActivity(), edit_id, Toast.LENGTH_LONG).show();
                 user_url = Hot_URL + edit_id;
                 new MyTask().execute();
             }
@@ -95,9 +94,9 @@ public class UserPageFragment extends Fragment {
         @Override
         protected void onPostExecute(UserModel models) {
             super.onPostExecute(models);
-            user_name.setText(models.getUser_name());
-            tagline.setText(models.getTagline());
-            bio.setText(models.getBio());
+            user_name.setText("用户名： " + models.getUser_name());
+            tagline.setText( "签名：  " +models.getTagline());
+            bio.setText( "我的心情：  " + models.getBio());
             ImageLoader.getInstance().loadImage(models.getAvatar_large(), new SimpleImageLoadingListener(){
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {

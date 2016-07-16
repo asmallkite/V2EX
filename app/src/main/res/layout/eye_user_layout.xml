@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="10dp"
     android:orientation="vertical">
 
    <LinearLayout
@@ -21,31 +22,45 @@
            android:src="@drawable/ic_action_search"/>
    </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_person"
-        android:id="@+id/avatar_large" />
+    <RelativeLayout
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/username" />
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_person"
+            android:id="@+id/avatar_large" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/tagline" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="New Text"
-        android:id="@+id/bio" />
+        <TextView
+            android:layout_below="@id/avatar_large"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="用户名： Livid"
+            android:id="@+id/username" />
 
+        <TextView
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="签名：  Gravitated and spellbound"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/tagline"
+            android:layout_below="@id/username"/>
+        <TextView
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 我的心情：  \t\t\t\t\t\tI’ve managed to make something I could call my own world, over time, little by little. And when I’m inside it, I feel kind of relieved."
+            android:id="@+id/bio" />
+
+    </RelativeLayout>
 </LinearLayout>
