@@ -32,7 +32,7 @@ public class UserPageFragment  extends Fragment {
     public static final String TAG = "MainActivity";
     List<TopicModel> links = new ArrayList<>();
     RecyclerView recyclerView;
-    public static final String UserPage_URL ="https://www.v2ex.com/api/topics/latest.json";
+    public static final String UserPage_URL ="https://www.v2ex.com/api/topics/hot.json";
 
     public UserPageFragment() {
     }
