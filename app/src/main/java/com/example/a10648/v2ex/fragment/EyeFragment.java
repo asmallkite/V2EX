@@ -46,14 +46,16 @@ public class EyeFragment extends Fragment {
         tab_title.setTabIndicatorColor(Color.BLUE);
         tab_title.setDrawFullUnderline(true);
 
-        titles.add("最新主题");
+
         titles.add("用户主页");
+        titles.add("最新主题");
 
         LatestFragment latestFragment = new LatestFragment();
-        Fragment fragment2 = new Fragment();
+        UserPageFragment userPageFragment = new UserPageFragment();
 
+
+        fragments.add(userPageFragment);
         fragments.add(latestFragment);
-        fragments.add(fragment2);
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);
         viewPager.setAdapter(myFragPaAdapter);
