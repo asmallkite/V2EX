@@ -54,5 +54,16 @@
         android:layout_toRightOf="@id/img_view_topic_head"
         android:layout_marginLeft="8dp"
         />
+    
+    <com.example.a10648.v2ex.widget.RelativeTimeTextView
+        android:id="@+id/txt_view_topic_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12 小时前"
+        android:layout_alignBottom="@id/img_view_topic_head"
+        android:layout_alignLeft="@id/txt_view_topic_name"
+        android:textColor="#aaa"
+        android:textSize="12sp"
+        />
 
 </RelativeLayout>

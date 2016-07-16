@@ -106,7 +106,9 @@ public class LatestFragment extends Fragment {
                     avatar = "http:" + avatar;
                 }
                 String username = jsonObject1.getString("username");
-                TopicModel topicModel = new TopicModel(title, url, content, avatar, username);
+                long created = jsonObject.getLong("created");
+
+                TopicModel topicModel = new TopicModel(title, url, content, avatar, username, created);
 
                 links.add(topicModel);
             }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.model.TopicModel;
+import com.example.a10648.v2ex.widget.RelativeTimeTextView;
 import com.example.a10648.v2ex.widget.SelectorImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -62,6 +63,7 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
             }
         });
         holder.txt_view_topic_name.setText(linkList.get(position).getUsername());
+        holder.txt_view_topic_time.setReferenceTime(linkList.get(position).getCreated());
         holder.itemView.setTag(linkList.get(position));
 
 
@@ -90,6 +92,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     TextView topic_content;
     SelectorImageView img_view_topic_head;
     TextView txt_view_topic_name;
+    RelativeTimeTextView txt_view_topic_time;
 
     public MyViewHolder(View itemView) {
         super(itemView);
@@ -97,6 +100,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         topic_content = (TextView) itemView.findViewById(R.id.txt_view_topic_content);
         img_view_topic_head = (SelectorImageView)itemView.findViewById(R.id.img_view_topic_head);
         txt_view_topic_name = (TextView)itemView.findViewById(R.id.txt_view_topic_name);
+        txt_view_topic_time = (RelativeTimeTextView)itemView.findViewById(R.id.txt_view_topic_time);
 
 
 

@@ -15,26 +15,16 @@ public class TopicModel {
 
     public String username;
 
+    public long created;
 
-    public TopicModel(String title, String url, String content) {
-        this.title = title;
-        this.url = url;
-        this.content = content;
-    }
 
-    public TopicModel(String title, String url, String content, String avatar) {
-        this.title = title;
-        this.url = url;
-        this.content = content;
-        this.avatar = avatar;
-    }
-
-    public TopicModel(String title, String url, String content, String avatar, String username) {
+    public TopicModel(String title, String url, String content, String avatar, String username, long created) {
         this.title = title;
         this.url = url;
         this.content = content;
         this.avatar = avatar;
         this.username = username;
+        this.created = created;
     }
 
     public String getTitle() {
@@ -75,5 +65,13 @@ public class TopicModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
     }
 }
