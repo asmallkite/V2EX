@@ -2,16 +2,21 @@ package com.example.a10648.v2ex.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.model.TopicModel;
+import com.example.a10648.v2ex.widget.SelectorImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.List;
 
@@ -45,10 +50,19 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.topic_title.setText(linkList.get(position).getTitle());
         holder.topic_content.setText(linkList.get(position).getContent());
+
+        ImageLoader.getInstance().loadImage(linkList.get(position).getAvatar(), new SimpleImageLoadingListener(){
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                holder.img_view_topic_head.setImageBitmap(loadedImage);
+            }
+        });
         holder.itemView.setTag(linkList.get(position));
+
 
     }
 
@@ -73,11 +87,16 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
 class MyViewHolder extends RecyclerView.ViewHolder{
     TextView topic_title;
     TextView topic_content;
+    SelectorImageView img_view_topic_head;
 
     public MyViewHolder(View itemView) {
         super(itemView);
         topic_title = (TextView)itemView.findViewById(R.id.txt_view_topic_title);
         topic_content = (TextView) itemView.findViewById(R.id.txt_view_topic_content);
+        img_view_topic_head = (SelectorImageView)itemView.findViewById(R.id.img_view_topic_head);
+
+
+
 
 
         //下面几行真正实现了RecycleView 中的点击事件

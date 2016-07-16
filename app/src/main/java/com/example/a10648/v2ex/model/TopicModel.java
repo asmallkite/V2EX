@@ -11,11 +11,20 @@ public class TopicModel {
 
     public String content;
 
+    public String avatar;
+
 
     public TopicModel(String title, String url, String content) {
         this.title = title;
         this.url = url;
         this.content = content;
+    }
+
+    public TopicModel(String title, String url, String content, String avatar) {
+        this.title = title;
+        this.url = url;
+        this.content = content;
+        this.avatar = avatar;
     }
 
     public String getTitle() {
@@ -40,5 +49,13 @@ public class TopicModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

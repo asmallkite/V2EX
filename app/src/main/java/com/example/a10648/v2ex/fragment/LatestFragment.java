@@ -100,7 +100,12 @@ public class LatestFragment extends Fragment {
                 String title = jsonObject.getString("title");
                 String content = jsonObject.getString("content");
                 String url = jsonObject.getString("url");
-                TopicModel topicModel = new TopicModel(title, url, content);
+                JSONObject jsonObject1 = jsonObject.getJSONObject("member");
+                String avatar = jsonObject1.getString("avatar_large");
+                if(avatar.startsWith("//")){
+                    avatar = "http:" + avatar;
+                }
+                TopicModel topicModel = new TopicModel(title, url, content, avatar);
 
                 links.add(topicModel);
             }
