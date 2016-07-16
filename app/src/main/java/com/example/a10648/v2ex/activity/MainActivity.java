@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.fragment.EyeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
     DrawerLayout drawerLayout;
     private int ic_item_No;// DrawerLayout中菜单中的索引号
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.ic_menu_view :
-                        Toast.makeText(MainActivity.this, " 系统维护中·····", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, " 系统维护中·····", Toast.LENGTH_SHORT).show();
                         if (ic_item_No != 1) {
 
                             getSupportFragmentManager().beginTransaction()
@@ -66,7 +66,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new EyeFragment())
+                .commit();
+        toolbar.setTitle("浏览");
+
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.all_node, menu);
+        return true;
+    }
 }
