@@ -47,15 +47,16 @@ public class EyeFragment extends Fragment {
         tab_title.setDrawFullUnderline(true);
 
 
-        titles.add("用户主页");
+
         titles.add("最新主题");
+        titles.add("用户主页");
 
         LatestFragment latestFragment = new LatestFragment();
         UserPageFragment userPageFragment = new UserPageFragment();
 
-
-        fragments.add(userPageFragment);
         fragments.add(latestFragment);
+        fragments.add(userPageFragment);
+
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);
         viewPager.setAdapter(myFragPaAdapter);
