@@ -95,7 +95,7 @@ public class LatestFragment extends Fragment {
             JSONArray jsonArray = new JSONArray(jsonData);
             for (int i =  0; i < jsonArray.length(); i ++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String url = jsonObject.getString("url");
+                String url = jsonObject.getString("title");
                 links.add(url);
             }
 
