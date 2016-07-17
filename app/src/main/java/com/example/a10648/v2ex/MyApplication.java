@@ -22,6 +22,7 @@ import java.io.File;
 public class MyApplication extends Application {
     private static Application mContext;
     private static int sMemoryClass;
+    public static  boolean isNetWorkConnected;
 
     @Override
     public void onCreate() {

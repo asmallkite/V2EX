@@ -24,11 +24,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.net.HttpConnect;
+import com.example.a10648.v2ex.net.NetWorkUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,25 +57,11 @@ public class LatestFragment extends Fragment {
     SQLiteDatabase db;
 
 
-    //网络状态变化相关实例
-    private IntentFilter intentFilter;
-    private NetworkChangeReceiver networkChangeReceiver;
-
-
     public LatestFragment() {
         // Required empty public constructor
     }
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //监听网络变化
-        intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        networkChangeReceiver = new NetworkChangeReceiver();
-        getActivity().registerReceiver(networkChangeReceiver, intentFilter);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,11 +81,7 @@ public class LatestFragment extends Fragment {
         return latest_view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getActivity().unregisterReceiver(networkChangeReceiver);
-    }
+
 
     /**
      * 异步执行网络操作
@@ -196,26 +180,8 @@ public class LatestFragment extends Fragment {
         }
     }
 
-    /**
-     * 每当网络发生变化时，onReceive 就执行，提示网络状态变化
-     */
-    class NetworkChangeReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-            if (networkInfo != null && networkInfo.isAvailable()) {
-                Toast.makeText(context, "network is available\n网 络 已 连 接", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, "network is unavailable\n网 络 不 可 用", Toast.LENGTH_SHORT).show();
-            }
-
-        }
 
 
-    }
+
 }
 
