@@ -2,7 +2,9 @@ package com.example.a10648.v2ex.fragment;
 
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
+import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.net.HttpConnect;
 
@@ -34,6 +37,9 @@ public class LatestFragment extends Fragment {
     public static final String LATEST_URL ="https://www.v2ex.com/api/topics/latest.json";
 
 
+    private MyDatabaseHelper dbHelper; //数据库对象
+    SQLiteDatabase db;
+
 
     public LatestFragment() {
         // Required empty public constructor
@@ -45,6 +51,12 @@ public class LatestFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View latest_view = LayoutInflater.from(getActivity()).inflate(R.layout.eye_latest_layout, container, false);
+
+        //创建SQLiteOpenHelper实例
+        dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
+        db = dbHelper.getWritableDatabase();
+
+
         recyclerView = (RecyclerView) latest_view.findViewById(R.id.recycle_view);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -69,6 +81,31 @@ public class LatestFragment extends Fragment {
         @Override
         protected void onPostExecute(List<TopicModel> models) {
             super.onPostExecute(models);
+            //执行数据库添加操作
+            for (int i = 0; i < models.size(); i ++){
+//                db.execSQL(" insert into Topic ( title , url , content , avatar , " +
+//                        "  username , created , replies , nodename ) " +
+//                        " values ( ? ， ? , ? , ? , ? ，? , ? , ? ) ", new Object[] { models.get(i).getTitle(), models.get(i).getUrl(),
+//                        models.get(i).getContent(), models.get(i).getAvatar(), models.get(i).getUsername(),
+//                        models.get(i).getCreated(), models.get(i).getReplies(), models.get(i).getNodename()});
+
+                ContentValues values = new ContentValues();
+                values.put("title", models.get(i).getTitle());
+                values.put("url", models.get(i).getUrl());
+                values.put("content", models.get(i).getContent());
+                values.put("avatar", models.get(i).getAvatar());
+
+                values.put("username", models.get(i).getUsername());
+                values.put("created", models.get(i).getCreated());
+                values.put("replies", models.get(i).getReplies());
+                values.put("nodename", models.get(i).getNodename());
+                db.insert("Topic", null, values);
+                values.clear();
+                Log.d("CREATEDB", "插入数据执行完毕");
+            }
+
+
+
             MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
             recyclerView.setAdapter(adapter2);
             adapter2.notifyDataSetChanged();

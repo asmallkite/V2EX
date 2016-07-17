@@ -65,15 +65,5 @@ public class EyeFragment extends Fragment  {
         return view;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.all_node, menu);
-//        MenuItem searchMenuItem = menu.findItem(R.id.menu_all_node_search);
-//        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-//        searchView.setQueryHint("Search for nodes");
-//
-//        return ;
-//
-//    }
+
 }

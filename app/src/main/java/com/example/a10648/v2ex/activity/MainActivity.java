@@ -77,7 +77,19 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.all_node, menu);
+        getMenuInflater().inflate(R.menu.search, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_all_node_search:
+                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+
+
+        }
         return true;
     }
 }

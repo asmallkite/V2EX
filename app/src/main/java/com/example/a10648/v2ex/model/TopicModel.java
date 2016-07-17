@@ -24,14 +24,7 @@ public class TopicModel {
 
 
 
-    public TopicModel(String title, String url, String content, String avatar, String username, long created) {
-        this.title = title;
-        this.url = url;
-        this.content = content;
-        this.avatar = avatar;
-        this.username = username;
-        this.created = created;
-    }
+
 
     public TopicModel(String title, String url, String content, String avatar, String username, long created, int replies, String nodename) {
         this.title = title;
