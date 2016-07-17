@@ -4,7 +4,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -108,6 +111,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
      */
     private void initViews() {
         lvResults = (RecyclerView) findViewById(R.id.main_lv_search_results);
+        lvResults.setItemAnimator(new DefaultItemAnimator());
+        lvResults.setLayoutManager(new LinearLayoutManager(this));
         searchView = (SearchView) findViewById(R.id.main_search_layout);
         //设置监听
         searchView.setSearchViewListener(this);
@@ -157,7 +162,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
         hintData.add("电影");
         hintData.add("音乐");
         hintData.add("小米");
-        hintData.add("杨幂");
+        hintData.add("android");
         hintAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hintData);
     }
 
@@ -198,6 +203,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
             for (int i = 0; i < dbData.size(); i++) {
                 if (dbData.get(i).getTitle().contains(text.trim())) {
                     resultData.add(dbData.get(i));
+//                    Log.d("SearchActivity", resultData.get(0).toString());
                 }
             }
         }
