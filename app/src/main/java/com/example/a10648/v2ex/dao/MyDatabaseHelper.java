@@ -10,7 +10,7 @@ import android.widget.Toast;
  */
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String CREATE_MEMBER = " create table Topic ( " +
+    public static final String CREATE_MEMBER = " CREATE TABLE IF NOT EXISTS Topic ( " +
             " id integer primary key autoincrement , " +
             " title text ,  " +
             " url text , " +

@@ -2,6 +2,7 @@ package com.example.a10648.v2ex.model;
 
 /**
  * Created by 10648 on 2016/7/15 0015.
+ * 话题模型
  */
 public class TopicModel {
 

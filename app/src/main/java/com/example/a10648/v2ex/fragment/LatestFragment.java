@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -41,7 +42,7 @@ import java.util.List;
 
 
 public class LatestFragment extends Fragment {
-//    public static final String TAG = "MainActivity";
+    public static final String TAG = "MainActivity";
 
     List<TopicModel> links = new ArrayList<>();
 
@@ -77,7 +78,24 @@ public class LatestFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        new MyTask().execute();
+        if (MyApplication.isNetWorkConnected > 0){
+            new MyTask().execute();
+        } else {
+            getDbData();
+        }
+
+        MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
+        recyclerView.setAdapter(adapter2);
+        adapter2.notifyDataSetChanged();
+        adapter2.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, TopicModel data) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(data.url));
+                startActivity(intent);
+
+            }
+        });
         return latest_view;
     }
 
@@ -121,21 +139,10 @@ public class LatestFragment extends Fragment {
                 values.put("nodename", models.get(i).getNodename());
                 db.insert("Topic", null, values);
                 values.clear();
-//                Log.d("CREATEDB", "插入数据执行完毕");
+                Log.d(TAG, "插入数据执行完毕");
             }
 
-            MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
-            recyclerView.setAdapter(adapter2);
-            adapter2.notifyDataSetChanged();
-            adapter2.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, TopicModel data) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(data.url));
-                    startActivity(intent);
 
-                }
-            });
         }
 
     }
@@ -178,6 +185,28 @@ public class LatestFragment extends Fragment {
             e.printStackTrace();
 
         }
+    }
+    /**
+     * 获取db 数据
+     */
+    private void getDbData() {
+        //查询Topic.db中所有的数据
+        Cursor cursor = db.query("Topic", null, null, null, null,  null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+                String url = cursor.getString(cursor.getColumnIndex("url"));
+                String content = cursor.getString(cursor.getColumnIndex("content"));
+                String avatar = cursor.getString(cursor.getColumnIndex("avatar"));
+                String username = cursor.getString(cursor.getColumnIndex("username"));
+                long created = cursor.getLong(cursor.getColumnIndex("created"));
+                int replies = cursor.getInt(cursor.getColumnIndex("replies"));
+                String nodename = cursor.getString(cursor.getColumnIndex("nodename"));
+                TopicModel model = new TopicModel(title, url, content, avatar , username, created, replies, nodename);
+                links.add(model);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
 

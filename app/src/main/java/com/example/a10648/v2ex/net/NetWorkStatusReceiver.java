@@ -35,7 +35,7 @@ public class NetWorkStatusReceiver extends BroadcastReceiver {
                 Toast.makeText(context, "网 络 不 可 用", Toast.LENGTH_SHORT).show();
             }
 
-            MyApplication.isNetWorkConnected = NetWorkUtils.getAPNType(context)>0;
+            MyApplication.isNetWorkConnected = NetWorkUtils.getAPNType(context);
         }
     }
 }

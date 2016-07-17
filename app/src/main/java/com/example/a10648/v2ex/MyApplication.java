@@ -22,7 +22,7 @@ import java.io.File;
 public class MyApplication extends Application {
     private static Application mContext;
     private static int sMemoryClass;
-    public static  boolean isNetWorkConnected;
+    public static  int isNetWorkConnected; //全局网络状态 没有网络0：WIFI网络1：3G网络2：2G网络3
 
     @Override
     public void onCreate() {
