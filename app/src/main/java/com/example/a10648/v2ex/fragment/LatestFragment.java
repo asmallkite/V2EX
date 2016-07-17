@@ -2,12 +2,18 @@ package com.example.a10648.v2ex.fragment;
 
 
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
@@ -31,20 +39,41 @@ import java.util.List;
 
 
 public class LatestFragment extends Fragment {
-    public static final String TAG = "MainActivity";
+//    public static final String TAG = "MainActivity";
+
     List<TopicModel> links = new ArrayList<>();
+
+
     RecyclerView recyclerView;
-    public static final String LATEST_URL ="https://www.v2ex.com/api/topics/latest.json";
 
 
+    public static final String LATEST_URL = "https://www.v2ex.com/api/topics/latest.json";
+
+
+    //数据库相关实例
     private MyDatabaseHelper dbHelper; //数据库对象
     SQLiteDatabase db;
+
+
+    //网络状态变化相关实例
+    private IntentFilter intentFilter;
+    private NetworkChangeReceiver networkChangeReceiver;
 
 
     public LatestFragment() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //监听网络变化
+        intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        networkChangeReceiver = new NetworkChangeReceiver();
+        getActivity().registerReceiver(networkChangeReceiver, intentFilter);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,16 +85,23 @@ public class LatestFragment extends Fragment {
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-
         recyclerView = (RecyclerView) latest_view.findViewById(R.id.recycle_view);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         new MyTask().execute();
         return latest_view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(networkChangeReceiver);
+    }
+
     /**
      * 异步执行网络操作
+     * 后来加上了 网络下载 数据存储到Sqlite 中的代码
      */
 
     public class MyTask extends AsyncTask<TopicModel, Integer, List<TopicModel>> {
@@ -82,7 +118,7 @@ public class LatestFragment extends Fragment {
         protected void onPostExecute(List<TopicModel> models) {
             super.onPostExecute(models);
             //执行数据库添加操作
-            for (int i = 0; i < models.size(); i ++){
+            for (int i = 0; i < models.size(); i++) {
 //                db.execSQL(" insert into Topic ( title , url , content , avatar , " +
 //                        "  username , created , replies , nodename ) " +
 //                        " values ( ? ， ? , ? , ? , ? ，? , ? , ? ) ", new Object[] { models.get(i).getTitle(), models.get(i).getUrl(),
@@ -101,10 +137,8 @@ public class LatestFragment extends Fragment {
                 values.put("nodename", models.get(i).getNodename());
                 db.insert("Topic", null, values);
                 values.clear();
-                Log.d("CREATEDB", "插入数据执行完毕");
+//                Log.d("CREATEDB", "插入数据执行完毕");
             }
-
-
 
             MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
             recyclerView.setAdapter(adapter2);
@@ -123,23 +157,26 @@ public class LatestFragment extends Fragment {
     }
 
 
+    /**
+     * 对HttpConnect 中的sendRequestWithHttpURLConnection 返回的response 进行解析
+     * 把解析得到的topicModel 添加到List 中
+     *
+     * @param jsonData 返回的response
+     */
 
-
-
-
-    private void praseJSONWithJSONObject (String jsonData) {
+    private void praseJSONWithJSONObject(String jsonData) {
         try {
 
             JSONArray jsonArray = new JSONArray(jsonData);
 
-            for (int i =  0; i < jsonArray.length(); i ++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String title = jsonObject.getString("title");
                 String content = jsonObject.getString("content");
                 String url = jsonObject.getString("url");
                 JSONObject jsonObject1 = jsonObject.getJSONObject("member");
                 String avatar = jsonObject1.getString("avatar_large");
-                if(avatar.startsWith("//")){
+                if (avatar.startsWith("//")) {
                     avatar = "http:" + avatar;
                 }
                 String username = jsonObject1.getString("username");
@@ -153,12 +190,32 @@ public class LatestFragment extends Fragment {
                 links.add(topicModel);
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
     }
 
+    /**
+     * 每当网络发生变化时，onReceive 就执行，提示网络状态变化
+     */
+    class NetworkChangeReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity()
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isAvailable()) {
+                Toast.makeText(context, "network is available\n网 络 已 连 接", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "network is unavailable\n网 络 不 可 用", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+    }
 }
 

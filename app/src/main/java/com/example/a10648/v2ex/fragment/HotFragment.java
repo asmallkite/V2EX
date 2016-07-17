@@ -24,11 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 10648 on 2016/7/15 0015.
+ * Created by 李争 on 2016/7/15 0015.
+ * 这是最热fragment的代码
  */
 public class HotFragment extends Fragment {
 
-    public static final String TAG = "MainActivity";
+//    public static final String TAG = "MainActivity";
     List<TopicModel> links = new ArrayList<>();
     RecyclerView recyclerView;
     public static final String Hot_URL ="https://www.v2ex.com/api/topics/hot.json";
@@ -83,9 +84,11 @@ public class HotFragment extends Fragment {
     }
 
 
-
-
-
+    /**
+     * 对HttpConnect 中的sendRequestWithHttpURLConnection 返回的response 进行解析
+     * 把解析得到的topicModel 添加到List 中
+     * @param jsonData 返回的response
+     */
 
     private void praseJSONWithJSONObject (String jsonData) {
         try {
