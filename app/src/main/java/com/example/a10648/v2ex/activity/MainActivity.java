@@ -1,5 +1,6 @@
 package com.example.a10648.v2ex.activity;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -86,7 +87,10 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_all_node_search:
-                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
+                //跳转到搜索的活动
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
 
 
         }
