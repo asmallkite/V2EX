@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
     /**
      * 默认提示框显示项的个数
      */
-    private static int DEFAULT_HINT_SIZE = 4;
+    private static int DEFAULT_HINT_SIZE = 12;
 
     /**
      * 提示框显示项的个数
@@ -158,11 +158,33 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
      * 获取热搜版data 和adapter
      */
     private void getHintData() {
+        dbHelper = new MyDatabaseHelper(this, "Topics.db", null, 1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        //查询Topic.db中所有的数据
+        Cursor cursor = db.query("Topic", null, null, null, null,  null, null);
         hintData = new ArrayList<>(hintSize);
-        hintData.add("电影");
-        hintData.add("音乐");
-        hintData.add("小米");
-        hintData.add("android");
+        if (cursor.moveToFirst()) {
+            do {
+                String title = cursor.getString(cursor.getColumnIndex("title"));
+
+               hintData.add(title);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+//        hintData.add("让互联网更安全 —— 配置好自己的 HTTPS");
+//        hintData.add("想做一个量化 app，以数据的方式来量化工作，生活的各个方面");
+//        hintData.add("大家有没有什么好的点子或者创业项目");
+//        hintData.add("Apple");
+//        hintData.add("微云为什么干不过百度云，甚至是360云？");
+//        hintData.add("云计算");
+//        hintData.add("Ubuntu 下 Sublime 无法输入中文，一站式解决～～");
+//        hintData.add("node.js");
+//        hintData.add("为什么有人会接受新工作的工资低于上一家？");
+//        hintData.add("分享一个 HTC 的坑");
+//        hintData.add("上高三和做码农哪个累？");
+//        hintData.add("买域名有必要买隐私保护么？");
         hintAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hintData);
     }
 
