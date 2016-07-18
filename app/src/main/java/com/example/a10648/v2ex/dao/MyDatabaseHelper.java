@@ -21,6 +21,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             " replies integer , " +
             " nodename text ) ";
 
+    public static final String CREATE_MEMBER_2 = " CREATE TABLE IF NOT EXISTS Topic2 ( " +
+            " id integer primary key autoincrement , " +
+            " title text ,  " +
+            " url text , " +
+            " content text ," +
+            " avatar text , " +
+            " username text , " +
+            " created integer , " +
+            " replies integer , " +
+            " nodename text ) ";
+
 
     private Context mContext;
 
@@ -34,12 +45,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_MEMBER);
-        Toast.makeText(mContext, "Create table", Toast.LENGTH_SHORT).show();
+        db.execSQL(CREATE_MEMBER_2);
+//        Toast.makeText(mContext, "Create table", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //虽然这个方法简单粗暴，但怒前不需要 oldVersion的判断
+        db.execSQL("drop table if exists Topic");
+        db.execSQL("drop table if exists Topic2");
+        onCreate(db);
 
     }
 }

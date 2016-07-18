@@ -2,19 +2,14 @@ package com.example.a10648.v2ex.fragment;
 
 
 
-import android.content.BroadcastReceiver;
+
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,23 +18,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.net.HttpConnect;
-import com.example.a10648.v2ex.net.NetWorkUtils;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Created by 李争 on 2016/7/15 0015.
+ * 这是最新fragment的代码
+ */
 
 public class LatestFragment extends Fragment {
     public static final String TAG = "MainActivity";
@@ -139,7 +132,7 @@ public class LatestFragment extends Fragment {
                 values.put("nodename", models.get(i).getNodename());
                 db.insert("Topic", null, values);
                 values.clear();
-                Log.d(TAG, "插入数据执行完毕");
+                Log.d(TAG, "插入latest数据执行完毕");
             }
 
 
