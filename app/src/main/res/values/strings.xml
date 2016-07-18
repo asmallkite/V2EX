@@ -16,4 +16,6 @@
     <string name="action_search">搜索</string>
     <string name="search_hint">请输入搜索的用户id</string>
 
+    <string name="see_more">查看用户详细信息</string>
+
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical">
 
@@ -13,6 +13,7 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="1"
+           android:inputType="number"
            android:hint="@string/search_hint"/>
        <ImageButton
           android:id="@+id/search_btn"
@@ -25,7 +26,7 @@
     <RelativeLayout
         android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_marginTop="30dp"
@@ -63,4 +64,15 @@
             android:id="@+id/bio" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/see_more"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/see_more"
+        android:background="@android:color/holo_orange_light"
+        />
 </LinearLayout>

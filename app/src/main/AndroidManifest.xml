@@ -22,13 +22,16 @@
         </activity>
         <activity android:name=".activity.SearchActivity" />
 
-        <receiver android:name=".net.NetWorkStatusReceiver"
+        <receiver
+            android:name=".net.NetWorkStatusReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activity.UserDetailActivity"></activity>
     </application>
 
 </manifest>
