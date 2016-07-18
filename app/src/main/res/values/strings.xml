@@ -7,6 +7,12 @@
     <!--ic_menu   navigation list-->
     <string name="ic_menu_view">浏览</string>
     <string name="ic_menu_about">关于</string>
+    <!--navigation drawer header-->
+    <string name="drawer_head_one">哆啦A梦</string>
+    <string name="draw_head_two">这是我从22世纪带过的哦，enjoy it</string>
+
+    <string name="drawer_open">打开</string>
+    <string name="drawer_close">关闭</string>
 
 
     <string name="just_now">刚刚</string>

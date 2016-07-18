@@ -4,38 +4,61 @@ import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.fragment.EyeFragment;
 
 public class MainActivity extends AppCompatActivity  {
-    DrawerLayout drawerLayout;
+
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
     private int ic_item_No;// DrawerLayout中菜单中的索引号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
 
+        init();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new EyeFragment())
+                .commit();
+    }
+
+    private void init() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("浏览");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
         }
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        NavigationView view = (NavigationView) findViewById(R.id.navigation_view);
-        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
+        actionBarDrawerToggle.syncState();
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
@@ -63,16 +86,9 @@ public class MainActivity extends AppCompatActivity  {
                         break;
                 }
 
-                return false;
+                return true;
             }
-
         });
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new EyeFragment())
-                .commit();
-        toolbar.setTitle("浏览");
-
     }
 
 

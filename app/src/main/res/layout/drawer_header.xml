@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="172dp"
-    android:background="@drawable/drawer_background"
+    android:background="@drawable/drawer_bg"
     android:orientation="vertical"
     android:paddingTop="@dimen/status_bar_height"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -13,7 +13,7 @@
         android:layout_height="64dp"
         android:layout_margin="@dimen/spacing_large"
         android:elevation="4dp"
-        tools:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/doraemon"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,8 +21,8 @@
         android:layout_above="@+id/email"
         android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginStart="@dimen/spacing_large"
-        android:text="V2EX"
-        android:textSize="40sp"
+        android:text="@string/drawer_head_one"
+        android:textSize="30sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
     <TextView
         android:id="@+id/email"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/spacing_large"
         android:layout_marginStart="@dimen/spacing_large"
         android:layout_marginBottom="@dimen/spacing_large"
-        android:text="Please enjoy it  --By 李 争"
+        android:text="@string/draw_head_two"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 

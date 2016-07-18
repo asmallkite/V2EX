@@ -20,7 +20,7 @@ public class EyeFragment extends Fragment  {
 
 
     private ViewPager viewPager;
-    private PagerTabStrip tab_title;
+    private PagerTabStrip pagerTabStrip;
     private List<String> titles = new ArrayList<>();//页卡标题集合
     private List<Fragment> fragments = new ArrayList<>(); //fragment集合
 
@@ -38,20 +38,22 @@ public class EyeFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_eye, container, false);
         viewPager = (ViewPager)view.findViewById(R.id.viewpager);
-        tab_title = (PagerTabStrip) view.findViewById(R.id.pager_title);
+        pagerTabStrip = (PagerTabStrip) view.findViewById(R.id.pager_title);
 
-        tab_title.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        tab_title.setTabIndicatorColor(Color.BLUE);
-        tab_title.setDrawFullUnderline(true);
+        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.tab_title_bg));
+        pagerTabStrip.setTabIndicatorColor(Color.YELLOW);
+        pagerTabStrip.setTextColor(Color.RED);
+        pagerTabStrip.setTextSpacing(40);
+        pagerTabStrip.setDrawFullUnderline(true);
 
 
 
-        titles.add("最新主题");
         titles.add("最热主题");
+        titles.add("最新主题");
         titles.add("用户主页");
 
-        LatestFragment latestFragment = new LatestFragment();
         HotFragment hotFragment = new HotFragment(); //最热主题的fragment
+        LatestFragment latestFragment = new LatestFragment();
         UserPageFragment userPageFragment = new UserPageFragment();
 
         fragments.add(latestFragment);
