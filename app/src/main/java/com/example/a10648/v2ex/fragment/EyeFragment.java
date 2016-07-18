@@ -41,8 +41,8 @@ public class EyeFragment extends Fragment  {
         pagerTabStrip = (PagerTabStrip) view.findViewById(R.id.pager_title);
 
         pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.tab_title_bg));
-        pagerTabStrip.setTabIndicatorColor(Color.YELLOW);
-        pagerTabStrip.setTextColor(Color.RED);
+        pagerTabStrip.setTabIndicatorColor(Color.WHITE);
+        pagerTabStrip.setTextColor(Color.WHITE);
         pagerTabStrip.setTextSpacing(40);
         pagerTabStrip.setDrawFullUnderline(true);
 

@@ -22,7 +22,8 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import java.util.List;
 
 /**
- * Created by 10648 on 2016/7/10 0010.
+ * Created by 李争 on 2016/7/10 0010.
+ * RecyclerView的适配器
  */
 public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> implements View.OnClickListener{
 
@@ -84,7 +85,7 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
     }
 
 
-    public static interface OnRecycleViewItemClickListener {
+    public  interface OnRecycleViewItemClickListener {
         void onItemClick(View view, TopicModel data);
     }
 }
@@ -107,10 +108,6 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         txt_view_topic_time = (RelativeTimeTextView)itemView.findViewById(R.id.txt_view_topic_time);
         txt_view_topic_replies = (TextView)itemView.findViewById(R.id.txt_view_topic_replies);
         txt_view_topic_node = (TextView)itemView.findViewById(R.id.txt_view_topic_node);
-
-
-
-
 
         //下面几行真正实现了RecycleView 中的点击事件
         itemView.setOnClickListener(new View.OnClickListener() {

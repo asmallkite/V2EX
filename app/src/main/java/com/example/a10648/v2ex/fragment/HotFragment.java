@@ -8,13 +8,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
@@ -41,6 +44,7 @@ public class HotFragment extends Fragment {
 
 
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     public static final String Hot_URL ="https://www.v2ex.com/api/topics/hot.json";
@@ -63,12 +67,44 @@ public class HotFragment extends Fragment {
 
         View hot_view = LayoutInflater.from(getActivity()).inflate(R.layout.eye_hot_layout, container, false);
 
+        recyclerView = (RecyclerView) hot_view.findViewById(R.id.recycle_view2);
+        swipeRefreshLayout = (SwipeRefreshLayout) hot_view.findViewById(R.id.refresh);
+
         //创建SQLiteOpenHelper实例
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
+        initSwipeRefresh();
+        initRecyclerView();
 
-        recyclerView = (RecyclerView) hot_view.findViewById(R.id.recycle_view2);
+
+
+
+        return hot_view;
+    }
+
+    public void initSwipeRefresh () {
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+
+    }
+
+    public void initRecyclerView () {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -92,9 +128,6 @@ public class HotFragment extends Fragment {
 
             }
         });
-
-
-        return hot_view;
     }
     /**
      * 异步执行网络操作
