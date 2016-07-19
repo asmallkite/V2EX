@@ -64,7 +64,7 @@ public class MyRecyclerViewAdapter2 extends RecyclerView.Adapter<MyViewHolder> i
             }
         });
         holder.txt_view_topic_name.setText(linkList.get(position).getUsername());
-        holder.txt_view_topic_time.setReferenceTime(linkList.get(position).getCreated());
+        holder.txt_view_topic_time.setReferenceTime(linkList.get(position).getCreated() * 1000);
         holder.txt_view_topic_replies.setText(String.valueOf(linkList.get(position).getReplies()) + "条 回复");
         holder.txt_view_topic_node.setText(linkList.get(position).getNodename());
         holder.itemView.setTag(linkList.get(position));
@@ -108,17 +108,14 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         txt_view_topic_time = (RelativeTimeTextView)itemView.findViewById(R.id.txt_view_topic_time);
         txt_view_topic_replies = (TextView)itemView.findViewById(R.id.txt_view_topic_replies);
         txt_view_topic_node = (TextView)itemView.findViewById(R.id.txt_view_topic_node);
-
         //下面几行真正实现了RecycleView 中的点击事件
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MyRecycleViewAdapter", "you click the item");
-
-            }
-        });
-
-
+//        itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("MyRecycleViewAdapter", "you click the item");
+//
+//            }
+//        });
     }
 
 }
