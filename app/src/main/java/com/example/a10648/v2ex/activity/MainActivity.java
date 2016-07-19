@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity  {
         toolbar.setTitle("浏览");
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_white));
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeButtonEnabled(true);
+//        }
 
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
