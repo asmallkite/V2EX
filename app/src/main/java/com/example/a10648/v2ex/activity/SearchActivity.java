@@ -1,13 +1,16 @@
 package com.example.a10648.v2ex.activity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -230,6 +233,15 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
         } else {
             resultAdapter.notifyDataSetChanged();
         }
+        resultAdapter.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, TopicModel data) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(data.url));
+                startActivity(intent);
+
+            }
+        });
     }
 
     /**

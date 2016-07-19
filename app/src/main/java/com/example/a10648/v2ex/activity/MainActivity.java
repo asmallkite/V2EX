@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity  {
                             toolbar.setTitle("浏览");
                             ic_item_No = 1;
                         } else {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container, new EyeFragment())
+                                    .commit();
                             drawerLayout.closeDrawers();
                         }
                         break;
