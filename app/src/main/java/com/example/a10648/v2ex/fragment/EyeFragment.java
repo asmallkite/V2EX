@@ -48,23 +48,57 @@ public class EyeFragment extends Fragment  {
         pagerTabStrip.setDrawFullUnderline(true);
 
 
-
+            /*根据id搜索用户主页*/
         titles.add("用户主页");
+            /*根据API接口进行获取*/
         titles.add("最热主题");
         titles.add("最新主题");
+            /*网络蜘蛛获取*/
         titles.add("创意");
+        titles.add("技术");
+        titles.add("好玩");
+        titles.add("Apple");
+        titles.add("工作");
+        titles.add("交易");
+        titles.add("城市");
+        titles.add("问与答");
+        titles.add("全部");
+        titles.add("R2");
 
 
         UserPageFragment userPageFragment = new UserPageFragment();
+
         HotFragment hotFragment = new HotFragment(); //最热主题的fragment
         LatestFragment latestFragment = new LatestFragment();
-        Fragment creative = JsoupFragment.newInstance(MyJsoup.HOT);
+
+        Fragment creative = JsoupFragment.newInstance(MyJsoup.CREATIVE);
+        Fragment tech = JsoupFragment.newInstance(MyJsoup.TECH);
+        Fragment play = JsoupFragment.newInstance(MyJsoup.PLAY);
+        Fragment apple = JsoupFragment.newInstance(MyJsoup.APPLE);
+        Fragment jobs = JsoupFragment.newInstance(MyJsoup.JOBS);
+        Fragment deals = JsoupFragment.newInstance(MyJsoup.DEALS);
+        Fragment city = JsoupFragment.newInstance(MyJsoup.CITY);
+        Fragment qna = JsoupFragment.newInstance(MyJsoup.QNA);
+        Fragment all = JsoupFragment.newInstance(MyJsoup.ALL);
+        Fragment r2 = JsoupFragment.newInstance(MyJsoup.R2);
+
 
 
         fragments.add(userPageFragment);
+
         fragments.add(latestFragment);
         fragments.add(hotFragment);
+
         fragments.add(creative);
+        fragments.add(tech);
+        fragments.add(play);
+        fragments.add(apple);
+        fragments.add(jobs);
+        fragments.add(deals);
+        fragments.add(city);
+        fragments.add(qna);
+        fragments.add(all);
+        fragments.add(r2);
 
 
 
