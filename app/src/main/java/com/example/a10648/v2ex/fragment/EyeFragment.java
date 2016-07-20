@@ -2,6 +2,7 @@ package com.example.a10648.v2ex.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -21,13 +22,10 @@ public class EyeFragment extends Fragment  {
 
 
     private ViewPager viewPager;
-    private PagerTabStrip pagerTabStrip;
+    private TabLayout tabLayout;
     private List<String> titles = new ArrayList<>();//页卡标题集合
     private List<Fragment> fragments = new ArrayList<>(); //fragment集合
 
-
-
-//    private OnFragmentInteractionListener mListener;
 
     public EyeFragment() {
         // Required empty public constructor
@@ -39,14 +37,7 @@ public class EyeFragment extends Fragment  {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_eye, container, false);
         viewPager = (ViewPager)view.findViewById(R.id.viewpager);
-        pagerTabStrip = (PagerTabStrip) view.findViewById(R.id.pager_title);
-
-        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.tab_title_bg));
-        pagerTabStrip.setTabIndicatorColor(Color.WHITE);
-        pagerTabStrip.setTextColor(Color.WHITE);
-        pagerTabStrip.setTextSpacing(40);
-        pagerTabStrip.setDrawFullUnderline(true);
-
+        tabLayout = (TabLayout)view.findViewById(R.id.sliding_tabs);
 
             /*根据id搜索用户主页*/
         titles.add("用户主页");
@@ -104,6 +95,8 @@ public class EyeFragment extends Fragment  {
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);
         viewPager.setAdapter(myFragPaAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
 
         return view;
     }
