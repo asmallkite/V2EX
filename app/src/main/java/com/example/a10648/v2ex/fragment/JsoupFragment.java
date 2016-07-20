@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
+import com.example.a10648.v2ex.activity.DetailActivity;
 import com.example.a10648.v2ex.adapter.JRecycleViewAdapter;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
@@ -105,8 +106,10 @@ public class JsoupFragment extends Fragment {
         jRecycleViewAdapter.setmOnItemClickListener(new JRecycleViewAdapter.JOnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, JtopicModel data) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(data.Jurl));
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(data.Jurl));
+//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
                 startActivity(intent);
             }
         });

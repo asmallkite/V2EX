@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:padding="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:background="#fff"
+            android:foreground="?android:selectableItemBackground"
+            android:orientation="horizontal"
+            card_view:cardCornerRadius="2dp">
+
+            <RelativeLayout
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <com.example.a10648.v2ex.widget.SelectorImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_launcher" />
+
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@+id/replies_layout"
+                    android:layout_toEndOf="@id/avatar">
+
+
+
+                    <TextView
+                        android:id="@+id/node_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:background="#f5f5f5"
+                        android:text="V2ex"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/node_title"
+                        android:text="author"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/create"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@id/name"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="1dp"
+                        android:text="2010年1月1日"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/replies_layout"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="2dp">
+
+                    <TextView
+                        android:id="@+id/replies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="15sp"
+                        android:text="10" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:background="#fff"
+            android:foreground="?android:selectableItemBackground"
+            android:orientation="horizontal"
+            card_view:cardCornerRadius="2dp">
+
+            <TextView
+                android:id="@+id/content_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="很多人一定对 2013 年打车软件“烧钱战”记忆犹新，滴滴、快的、易达打车等打车软件通过对用户高额补贴跑马圈地，而目前的视频直播行业，正如同 2013 年的打车软件，处于探索起步阶段。政策模糊，商业模式不明确，用户粘性不高，市场不规范，运营成本高导致视频直播行业乱象丛生。
+
+然而，市场发展的历史告诉我们，行业的喧嚣终将归于沉寂，经过一轮洗牌之后，谁将成为视频直播行业的独角兽？
+
+除了对优质主播 KOL 的争夺之外，直播平台竞争明星资源的趋势也愈演愈烈。 2015 年， angelababy 就签约王思聪的熊猫 TV ，并于今年年初进行了一场户外直播秀，与网友聊天、唱歌、互动。而映客一举拿下 bigbang 2016 中国巡回演唱会直播权，各类发布会在直播平台上也屡见不鲜。
+
+因此，目前形成的局面是，有清晰定位的垂直内容直播平台如秀场的 YY ，游戏的斗鱼和熊猫，全民的映客，在内容上的边界越来越模糊，无论是 PGC 、 UGC 甚至是 OGC ，无"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="4dp"
+            android:background="#fff"
+            android:foreground="?android:selectableItemBackground"
+            android:orientation="horizontal"
+            card_view:cardCornerRadius="2dp">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comment_recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>
