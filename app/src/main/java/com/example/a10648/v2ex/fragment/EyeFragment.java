@@ -86,8 +86,8 @@ public class EyeFragment extends Fragment  {
 
         fragments.add(userPageFragment);
 
-        fragments.add(latestFragment);
         fragments.add(hotFragment);
+        fragments.add(latestFragment);
 
         fragments.add(creative);
         fragments.add(tech);

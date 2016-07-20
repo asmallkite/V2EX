@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -96,8 +97,13 @@ public class LatestFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+                    }
+                }        , 4000   );
 
             }
         });
@@ -108,10 +114,12 @@ public class LatestFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (MyApplication.isNetWorkConnected > 0){
-            new MyTask().execute();
-        } else {
+        if (db.query("Topic", null, null, null, null,  null, null).moveToFirst()) {
             getDbData();
+        } else if (MyApplication.isNetWorkConnected == 0) {
+            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
+        } else {
+            new MyTask().execute();
         }
 
         MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());

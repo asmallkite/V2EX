@@ -46,6 +46,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_MEMBER);
         db.execSQL(CREATE_MEMBER_2);
+        db.execSQL(tech);
+        db.execSQL(creative);
+        db.execSQL(play);
+        db.execSQL(apple);
+        db.execSQL(jobs);
+        db.execSQL(deals);
+        db.execSQL(city);
+        db.execSQL(qna);
+        db.execSQL(alls);
+        db.execSQL(r2);
 //        Toast.makeText(mContext, "Create table", Toast.LENGTH_SHORT).show();
 
     }
@@ -55,7 +65,121 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         //虽然这个方法简单粗暴，但怒前不需要 oldVersion的判断
         db.execSQL("drop table if exists Topic");
         db.execSQL("drop table if exists Topic2");
+        db.execSQL("drop table if exists tech");
+        db.execSQL("drop table if exists creative");
+        db.execSQL("drop table if exists play");
+        db.execSQL("drop table if exists apple");
+        db.execSQL("drop table if exists jobs");
+        db.execSQL("drop table if exists deals");
+        db.execSQL("drop table if exists city");
+        db.execSQL("drop table if exists qna");
+        db.execSQL("drop table if exists alls");
+        db.execSQL("drop table if exists r2");
+
         onCreate(db);
 
     }
+
+
+    public static final String tech = " CREATE TABLE IF NOT EXISTS tech ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String creative = " CREATE TABLE IF NOT EXISTS creative ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String play = " CREATE TABLE IF NOT EXISTS play ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String apple = " CREATE TABLE IF NOT EXISTS apple ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String jobs = " CREATE TABLE IF NOT EXISTS jobs ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String deals = " CREATE TABLE IF NOT EXISTS deals ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String city = " CREATE TABLE IF NOT EXISTS city ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String qna = " CREATE TABLE IF NOT EXISTS qna ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String alls = " CREATE TABLE IF NOT EXISTS alls ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+    public static final String r2 = " CREATE TABLE IF NOT EXISTS r2 ( " +
+            " id integer primary key autoincrement , " +
+            " Javatar text ,  " +
+            " Jurl text , " +
+            " Jtitle text ," +
+            " Jnodename text , " +
+            " Jcreated text , " +
+            " Jusername text , " +
+            " Jreplies text ) ";
+
+
 }

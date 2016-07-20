@@ -1,19 +1,26 @@
 package com.example.a10648.v2ex.fragment;
 
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.JRecycleViewAdapter;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
+import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.jsoup.MyJsoup;
 import com.example.a10648.v2ex.model.JtopicModel;
 import com.example.a10648.v2ex.model.TopicModel;
@@ -35,6 +42,10 @@ public class JsoupFragment extends Fragment {
     List<JtopicModel> jtopicModels = new ArrayList<>();
 
     MyJsoup myJsoup;
+
+    //数据库相关实例
+    private MyDatabaseHelper dbHelper; //数据库对象
+    SQLiteDatabase db;
 
 
     public JsoupFragment() {
@@ -61,6 +72,11 @@ public class JsoupFragment extends Fragment {
                              Bundle savedInstanceState) {
         View j_view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_jsoup, container, false);
 
+        //创建SQLiteOpenHelper实例
+        dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
+        db = dbHelper.getWritableDatabase();
+
+
         j_recycle_view = (RecyclerView)j_view.findViewById(R.id.j_recycle_view);
 
         initRecyclerView();
@@ -72,7 +88,14 @@ public class JsoupFragment extends Fragment {
         j_recycle_view.setItemAnimator(new DefaultItemAnimator());
         j_recycle_view.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        new JsoupTask().execute();
+
+        if (db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
+            getDbData();
+        } else if (MyApplication.isNetWorkConnected == 0) {
+            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
+        } else {
+            new JsoupTask().execute();
+        }
 
         JRecycleViewAdapter jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
@@ -94,5 +117,47 @@ public class JsoupFragment extends Fragment {
             return jtopicModels;
         }
 
+        @Override
+        protected void onPostExecute(List<JtopicModel> jtopicModels) {
+            super.onPostExecute(jtopicModels);
+
+            //执行数据库添加操作
+            for (int i = 0; i < jtopicModels.size(); i++) {
+                ContentValues values = new ContentValues();
+                values.put("Javatar", jtopicModels.get(i).getJavatar());
+                values.put("Jurl", jtopicModels.get(i).getJurl());
+                values.put("Jtitle", jtopicModels.get(i).getJtitle());
+                values.put("Jnodename", jtopicModels.get(i).getJnodename());
+                values.put("Jcreated", jtopicModels.get(i).getJcreated());
+                values.put("Jusername", jtopicModels.get(i).getJusername());
+                values.put("Jreplies", jtopicModels.get(i).getJreplies());
+
+                db.insert(getArguments().getString(ARG), null, values);
+                values.clear();
+            }
+        }
+    }
+
+    /**
+     * 获取db 数据
+     */
+    private void getDbData() {
+        //查询Topic.db中所有的数据
+        Cursor cursor = db.query(getArguments().getString(ARG), null, null, null, null,  null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String Javatar = cursor.getString(cursor.getColumnIndex("Javatar"));
+                String Jurl = cursor.getString(cursor.getColumnIndex("Jurl"));
+                String Jtitle = cursor.getString(cursor.getColumnIndex("Jtitle"));
+                String Jnodename = cursor.getString(cursor.getColumnIndex("Jnodename"));
+                String Jcreated = cursor.getString(cursor.getColumnIndex("Jcreated"));
+                String Jusername = cursor.getString(cursor.getColumnIndex("Jusername"));
+                String Jreplies = cursor.getString(cursor.getColumnIndex("Jreplies"));
+
+                JtopicModel jtopicModel = new JtopicModel(Javatar, Jurl, Jtitle, Jnodename, Jcreated, Jusername, Jreplies);
+                jtopicModels.add(jtopicModel);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 }

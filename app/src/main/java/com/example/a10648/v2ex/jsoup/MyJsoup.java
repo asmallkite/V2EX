@@ -1,10 +1,6 @@
 package com.example.a10648.v2ex.jsoup;
 
-import android.util.Log;
-
 import com.example.a10648.v2ex.model.JtopicModel;
-import com.example.a10648.v2ex.model.TopicModel;
-import com.example.a10648.v2ex.utils.database.Str2No;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -24,31 +20,31 @@ public class MyJsoup {
     /**
      * 要爬取的网络链接 由两部分组成。base_url tab_url
      */
-    String base_url = "http://www.v2ex.com/";
+    String base_url = "http://www.v2ex.com/?tab=";
     String tab_url ;
 
 
-    public static final String TECH = "?tab=tech";
+    public static final String TECH = "tech";
 
-    public static final String CREATIVE = "?tab=creative";
+    public static final String CREATIVE = "creative";
 
-    public static final String PLAY = "?tab=play";
+    public static final String PLAY = "play";
 
-    public static final String APPLE = "?tab=apple";
+    public static final String APPLE = "apple";
 
-    public static final String JOBS = "?tab=jobs";
+    public static final String JOBS = "jobs";
 
-    public static final String DEALS = "?tab=deals";
+    public static final String DEALS = "deals";
 
-    public static final String CITY = "?tab=city";
+    public static final String CITY = "city";
 
-    public static final String QNA = "?tab=qna";
+    public static final String QNA = "qna";
 
-    public static final String HOT = "?tab=hot";
+    public static final String HOT = "hot";
 
-    public static final String ALL = "?tab=all";
+    public static final String ALL = "alls";
 
-    public static final String R2 = "?tab=r2";
+    public static final String R2 = "r2";
 
     Document doc;
 
