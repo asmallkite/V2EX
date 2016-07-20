@@ -23,10 +23,6 @@ public class TopicModel {
     public String nodename;
 
 
-
-
-
-
     public TopicModel(String title, String url, String content, String avatar, String username, long created, int replies, String nodename) {
         this.title = title;
         this.url = url;

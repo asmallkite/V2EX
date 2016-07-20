@@ -164,18 +164,6 @@ public class HotFragment extends Fragment {
                 Log.d(TAG, "插入hottest数据执行完毕");
 
             }
-            MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
-            recyclerView.setAdapter(adapter2);
-            adapter2.notifyDataSetChanged();
-            adapter2.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, TopicModel data) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(data.url));
-                    startActivity(intent);
-
-                }
-            });
         }
 
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyFragPaAdapter;
+import com.example.a10648.v2ex.jsoup.MyJsoup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +49,23 @@ public class EyeFragment extends Fragment  {
 
 
 
+        titles.add("用户主页");
         titles.add("最热主题");
         titles.add("最新主题");
-        titles.add("用户主页");
+        titles.add("创意");
 
+
+        UserPageFragment userPageFragment = new UserPageFragment();
         HotFragment hotFragment = new HotFragment(); //最热主题的fragment
         LatestFragment latestFragment = new LatestFragment();
-        UserPageFragment userPageFragment = new UserPageFragment();
+        Fragment creative = JsoupFragment.newInstance(MyJsoup.HOT);
 
+
+        fragments.add(userPageFragment);
         fragments.add(latestFragment);
         fragments.add(hotFragment);
-        fragments.add(userPageFragment);
+        fragments.add(creative);
+
 
 
         MyFragPaAdapter myFragPaAdapter = new MyFragPaAdapter(getFragmentManager(), fragments, titles);

@@ -5,10 +5,14 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="8dp">
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:background="#fff"
+    android:foreground="?android:selectableItemBackground"
+    android:orientation="horizontal"
+    app:cardCornerRadius="2dp">
 
 
     <RelativeLayout
