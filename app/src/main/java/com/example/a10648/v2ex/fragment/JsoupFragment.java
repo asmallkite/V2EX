@@ -2,8 +2,10 @@ package com.example.a10648.v2ex.fragment;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -99,6 +101,15 @@ public class JsoupFragment extends Fragment {
 
         JRecycleViewAdapter jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
+        jRecycleViewAdapter.notifyDataSetChanged();
+        jRecycleViewAdapter.setmOnItemClickListener(new JRecycleViewAdapter.JOnRecycleViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, JtopicModel data) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(data.Jurl));
+                startActivity(intent);
+            }
+        });
 
 
     }
