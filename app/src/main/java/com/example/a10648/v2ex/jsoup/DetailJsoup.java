@@ -36,7 +36,7 @@ public class DetailJsoup {
      */
     public void Jconn () {
         try {
-            
+
             doc = Jsoup.connect(url_detail).get();
 
         } catch (IOException e) {
@@ -48,9 +48,6 @@ public class DetailJsoup {
 
         string = doc.select("div[id~=^Wrapper$]").select("div[class~=^topic_content$]");
         content_details = string.toString();
-
-        Log.d(TAG, content_details);
-
         return content_details;
     }
 }

@@ -113,6 +113,11 @@ public class JsoupFragment extends Fragment {
 //                startActivity(intent);
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("url_con", data.getJurl());
+                intent.putExtra("avatar", data.getJavatar());
+                intent.putExtra("node_name", data.getJnodename());
+                intent.putExtra("name", data.getJusername());
+                intent.putExtra("create", data.getJcreated());
+                intent.putExtra("replies", data.getJreplies());
                 startActivity(intent);
 
             }

@@ -23,7 +23,6 @@
             card_view:cardCornerRadius="2dp">
 
             <RelativeLayout
-                android:id="@+id/info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
@@ -38,7 +37,6 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -49,7 +47,7 @@
 
 
                     <TextView
-                        android:id="@+id/node_title"
+                        android:id="@+id/node_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -62,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_below="@id/node_title"
+                        android:layout_below="@id/node_name"
                         android:text="author"
                         android:textSize="12sp" />
 
@@ -80,7 +78,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/replies_layout"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
