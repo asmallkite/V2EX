@@ -109,8 +109,12 @@ public class JsoupFragment extends Fragment {
 //                Intent intent = new Intent(Intent.ACTION_VIEW);
 //                intent.setData(Uri.parse(data.Jurl));
 //                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), DetailActivity.class);
+//                startActivity(intent);
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("url_con", data.getJurl());
                 startActivity(intent);
+
             }
         });
 
