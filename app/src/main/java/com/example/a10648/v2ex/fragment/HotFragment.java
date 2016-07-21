@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
+import com.example.a10648.v2ex.activity.DetailActivity;
 import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.model.TopicModel;
@@ -136,10 +137,19 @@ public class HotFragment extends Fragment {
         adapter2.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, TopicModel data) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(data.url));
-                startActivity(intent);
+                   /*以下三行点击item 跳转到浏览器中打开*/
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(data.url));
+//                startActivity(intent);
 
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("url_con", data.getUrl());
+                intent.putExtra("avatar", data.getAvatar());
+                intent.putExtra("node_name", data.getNodename());
+                intent.putExtra("name", data.getUsername());
+                intent.putExtra("create", data.getCreated());
+                intent.putExtra("replies", data.getReplies());
+                startActivity(intent);
             }
         });
     }
