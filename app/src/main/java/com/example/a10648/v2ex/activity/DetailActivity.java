@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
@@ -28,12 +29,19 @@ public class DetailActivity extends AppCompatActivity {
     public static final String TAG = "DetailActivity";
 
     TextView contentDetails;
+    ImageView img_1;
+    ImageView img_2;
+    ImageView img_3;
+    ImageView img_4;
+    ImageView img_5;
+
     SelectorImageView avatar;
     TextView nodename;
     TextView name;
     TextView create;
     TextView replies;
     DetailJsoup detailJsoupInstance;
+
     RecyclerView comment_recycle_view;
 
     String url_con;
@@ -49,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
         url_con = getIntent().getStringExtra("url_con");
         detailJsoupInstance = new DetailJsoup(url_con);
 
-        new getContentAsyncTask().execute();
+        new getContentImgsAsyncTask().execute();
         new getCommentAsynctask().execute();
         //设置comment_recycle_view
         setCommentRecyclerView();
@@ -57,6 +65,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void init() {
+        img_1 = (ImageView) findViewById(R.id.img_1);
+        img_2 = (ImageView) findViewById(R.id.img_2);
+        img_3 = (ImageView) findViewById(R.id.img_3);
+        img_4 = (ImageView) findViewById(R.id.img_4);
+        img_5 = (ImageView) findViewById(R.id.img_5);
         contentDetails = (TextView) findViewById(R.id.content_details);
         avatar = (SelectorImageView) findViewById(R.id.avatar);
         nodename = (TextView) findViewById(R.id.node_name);
@@ -89,18 +102,53 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    public class getContentAsyncTask extends AsyncTask<String, Integer, String> {
+    public class getContentImgsAsyncTask extends AsyncTask<Void, Integer, List<String>> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected List<String> doInBackground(Void... params) {
             detailJsoupInstance.Jconn();
-            return detailJsoupInstance.getContentDetails();
+            return detailJsoupInstance.getContentImgs();
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(List<String> s) {
             super.onPostExecute(s);
-            contentDetails.setText(s); //这个setText 方法必须在onPostExecute中，否则显示不出来
+            ImageLoader.getInstance().loadImage(s.get(0), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    img_1.setImageBitmap(loadedImage);
+                }
+            });
+            ImageLoader.getInstance().loadImage(s.get(1), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    img_2.setImageBitmap(loadedImage);
+                }
+            });
+            ImageLoader.getInstance().loadImage(s.get(2), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    img_3.setImageBitmap(loadedImage);
+                }
+            });
+            ImageLoader.getInstance().loadImage(s.get(3), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    img_4.setImageBitmap(loadedImage);
+                }
+            });
+            ImageLoader.getInstance().loadImage(s.get(4), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    super.onLoadingComplete(imageUri, view, loadedImage);
+                    img_5.setImageBitmap(loadedImage);
+                }
+            });
+//            contentDetails.setText(s); //这个setText 方法必须在onPostExecute中，否则显示不出来
         }
     }
 

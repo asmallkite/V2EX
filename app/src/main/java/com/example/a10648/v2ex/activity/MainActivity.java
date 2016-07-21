@@ -109,4 +109,17 @@ public class MainActivity extends AppCompatActivity  {
         }
         return true;
     }
+
+    private long exitTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+           Toast.makeText(MainActivity.this, getString(R.string.main_exitapp_hint),Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+        }
+    }
+
 }

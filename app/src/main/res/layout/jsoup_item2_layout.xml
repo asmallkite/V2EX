@@ -111,12 +111,17 @@
             android:orientation="horizontal"
             card_view:cardCornerRadius="2dp">
 
-            <TextView
-                android:id="@+id/content_details"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:text="很多人一定对 2013 年打车软件“烧钱战”记忆犹新，滴滴、快的、易达打车等打车软件通过对用户高额补贴跑马圈地，而目前的视频直播行业，正如同 2013 年的打车软件，处于探索起步阶段。政策模糊，商业模式不明确，用户粘性不高，市场不规范，运营成本高导致视频直播行业乱象丛生。
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/content_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:text="很多人一定对 2013 年打车软件“烧钱战”记忆犹新，滴滴、快的、易达打车等打车软件通过对用户高额补贴跑马圈地，而目前的视频直播行业，正如同 2013 年的打车软件，处于探索起步阶段。政策模糊，商业模式不明确，用户粘性不高，市场不规范，运营成本高导致视频直播行业乱象丛生。
 
 然而，市场发展的历史告诉我们，行业的喧嚣终将归于沉寂，经过一轮洗牌之后，谁将成为视频直播行业的独角兽？
 
@@ -124,6 +129,27 @@
 
 因此，目前形成的局面是，有清晰定位的垂直内容直播平台如秀场的 YY ，游戏的斗鱼和熊猫，全民的映客，在内容上的边界越来越模糊，无论是 PGC 、 UGC 甚至是 OGC ，无"/>
 
+                <ImageView
+                    android:id="@+id/img_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/img_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView

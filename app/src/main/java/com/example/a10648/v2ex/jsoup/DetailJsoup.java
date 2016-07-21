@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,10 +27,14 @@ public class DetailJsoup {
     String url_detail;
 
     Document doc;
-    Elements string;//二级界面的文章内容
+    Elements content_1;//二级界面的文章内容
     Elements comments; //评论内容
 
-    String content_details = null; //获取的文章内容
+    //获取的文章内容
+    List<String> imgs = new ArrayList<>();
+//    HashMap<String,String> imgs = new HashMap<String,String>();
+    String content_details = null;
+    String img_url = null;
 
     List<CommentModel> commentModelList = new ArrayList<>();
 
@@ -52,11 +57,18 @@ public class DetailJsoup {
         }
     }
 
-    public String getContentDetails () {
+    public List<String> getContentImgs () {
 
-        string = doc.select("div[id~=^Wrapper$]").select("div[class~=^topic_content$]");
-        content_details = string.toString();
-        return content_details;
+        content_1 = doc.select("div[id~=^Wrapper$]").select("div[class~=^topic_content$]");
+        Elements media = content_1.select("[src]");
+        for (Element src : media) {
+            if (src.tagName().equals("img"))
+            {
+                img_url = src.attr("abs:src");
+                imgs.add(img_url);
+            }
+        }
+        return imgs;
     }
 
     public List<CommentModel> getCommentModel () {

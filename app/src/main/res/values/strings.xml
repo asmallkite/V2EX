@@ -18,6 +18,8 @@
 
     <string name="just_now">刚刚</string>
 
+    <string name="main_exitapp_hint">再按一次退出V2EX</string>
+
     <string name="ic_menu_person">我的</string>
 
     <string name="action_search">搜索</string>
