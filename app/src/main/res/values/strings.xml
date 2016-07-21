@@ -10,7 +10,8 @@
     <!--navigation drawer header-->
     <string name="drawer_head_one">哆啦A梦</string>
     <string name="draw_head_two">这是我从22世纪带过的哦，enjoy it</string>
-
+    <string name="fun">功能</string>
+    <string name="about_me">想了解我吗</string>
     <string name="drawer_open">打开</string>
     <string name="drawer_close">关闭</string>
 

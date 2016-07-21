@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
-            android:layout_toStartOf="@+id/replies_layout"
+            android:layout_toStartOf="@id/replies_layout"
             android:layout_toEndOf="@id/avatar">
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_marginBottom="12dp"
                 android:text="标题"
                 android:textColor="#de000000"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/node_title"
@@ -53,7 +53,7 @@
                 android:layout_below="@id/title"
                 android:background="#f5f5f5"
                 android:text="V2ex"
-                android:textSize="12sp"/>
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/name"
@@ -67,11 +67,10 @@
                 android:id="@+id/create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+                android:layout_toEndOf="@id/name"
+                android:layout_marginStart="30dp"
                 android:layout_alignTop="@id/name"
                 android:layout_gravity="center_vertical"
-                android:paddingRight="1dp"
                 android:text="2010年1月1日"
                 android:textSize="12sp" />
 
@@ -89,10 +88,8 @@
             <TextView
                 android:id="@+id/replies"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="15sp"
                 android:text="10" />

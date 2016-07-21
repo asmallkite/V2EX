@@ -104,9 +104,9 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    public class getCommentAsynctask extends AsyncTask<List<CommentModel>, Intent, List<CommentModel>> {
+    public class getCommentAsynctask extends AsyncTask<Void, Intent, List<CommentModel>> {
         @Override
-        protected List<CommentModel> doInBackground(List<CommentModel>... params) {
+        protected List<CommentModel> doInBackground(Void... params) {
             detailJsoupInstance.Jconn();
             return detailJsoupInstance.getCommentModel();
         }
