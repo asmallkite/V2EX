@@ -12,7 +12,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,19 +56,25 @@ public class DetailJsoup {
         }
     }
 
-    public List<String> getContentImgs () {
-
+    public String get_final_content () {
         content_1 = doc.select("div[id~=^Wrapper$]").select("div[class~=^topic_content$]");
-        Elements media = content_1.select("[src]");
-        for (Element src : media) {
-            if (src.tagName().equals("img"))
-            {
-                img_url = src.attr("abs:src");
-                imgs.add(img_url);
-            }
-        }
-        return imgs;
+        content_details = content_1.toString();
+        return content_details;
     }
+
+//    public List<String> getContentImgs () {
+//
+//        content_1 = doc.select("div[id~=^Wrapper$]").select("div[class~=^topic_content$]");
+//        Elements media = content_1.select("[src]");
+//        for (Element src : media) {
+//            if (src.tagName().equals("img"))
+//            {
+//                img_url = src.attr("abs:src");
+//                imgs.add(img_url);
+//            }
+//        }
+//        return imgs;
+//    }
 
     public List<CommentModel> getCommentModel () {
         comments = doc.select("div[id~=^Wrapper$]").select("div[id~=^r_.+]");
