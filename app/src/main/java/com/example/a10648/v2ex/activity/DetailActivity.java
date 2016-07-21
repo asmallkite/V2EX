@@ -41,11 +41,6 @@ public class DetailActivity extends AppCompatActivity  {
     /*二级界面第二个cardView*/
     /*这块是文章正文 文字和图片，最多五张图片，文章里面不够五张，有几张显示几张*/
     TextView contentDetails;
-    ImageView img_1;
-    ImageView img_2;
-    ImageView img_3;
-    ImageView img_4;
-    ImageView img_5;
 
     /*二级界面第一个cardView*/
     SelectorImageView avatar;
@@ -81,16 +76,7 @@ public class DetailActivity extends AppCompatActivity  {
     }
 
     private void init() {
-        img_1 = (ImageView) findViewById(R.id.img_1);
-        img_2 = (ImageView) findViewById(R.id.img_2);
-        img_3 = (ImageView) findViewById(R.id.img_3);
-        img_4 = (ImageView) findViewById(R.id.img_4);
-        img_5 = (ImageView) findViewById(R.id.img_5);
-
-
         contentDetails = (TextView) findViewById(R.id.content_details);
-
-
         avatar = (SelectorImageView) findViewById(R.id.avatar);
         nodename = (TextView) findViewById(R.id.node_name);
         name = (TextView) findViewById(R.id.name);
@@ -153,40 +139,6 @@ public class DetailActivity extends AppCompatActivity  {
             }
         }
 
-//        public class getContentImgsAsyncTask extends AsyncTask<Void, Integer, List<String>> {
-//
-//            @Override
-//            protected List<String> doInBackground(Void... params) {
-//                detailJsoupInstance.Jconn();
-//                return detailJsoupInstance.getContentImgs();
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<String> s) {
-//                super.onPostExecute(s);
-//
-//                for (int i = 0; i < s.size() - 1; i++) {
-//                    if (i == 1) {
-//                        img_1 = img_2;
-//                    } else if (i == 2) {
-//                        img_1 = img_3;
-//                    } else if (i == 3) {
-//                        img_1 = img_4;
-//                    } else if (i == 4) {
-//                        img_1 = img_5;
-//                    }
-//                    ImageLoader.getInstance().loadImage(s.get(i), new SimpleImageLoadingListener() {
-//                        @Override
-//                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                            super.onLoadingComplete(imageUri, view, loadedImage);
-//                            img_1.setImageBitmap(loadedImage);
-//                        }
-//                    });
-//                }
-//
-////            contentDetails.setText(Html.fromHtml(s)); //这个setText 方法必须在onPostExecute中，否则显示不出来
-//            }
-//        }
 
         public class getCommentAsynctask extends AsyncTask<Void, Intent, List<CommentModel>> {
             @Override
