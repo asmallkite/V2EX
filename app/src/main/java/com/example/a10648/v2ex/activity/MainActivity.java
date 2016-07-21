@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_all_node_search:
-//                Toast.makeText(this, "search", Toast.LENGTH_SHORT).show();
                 //跳转到搜索的活动
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);

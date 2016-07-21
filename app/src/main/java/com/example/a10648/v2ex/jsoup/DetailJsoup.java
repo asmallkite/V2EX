@@ -1,7 +1,6 @@
 package com.example.a10648.v2ex.jsoup;
 
 
-import android.util.Log;
 
 import com.example.a10648.v2ex.model.CommentModel;
 

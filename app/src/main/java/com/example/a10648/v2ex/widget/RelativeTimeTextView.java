@@ -12,7 +12,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.a10648.v2ex.utils.database.TextUtils;
+import com.example.a10648.v2ex.util.TextUtils;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.a10648.v2ex.utils.database;
+package com.example.a10648.v2ex.util;
 
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -7,6 +7,7 @@ import com.example.a10648.v2ex.R;
 
 /**
  * Created by 10648 on 2016/7/15 0015.
+ * 此util用在RelativeView 里面 一个简单的使用
  */
 public class TextUtils {
 

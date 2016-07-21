@@ -16,7 +16,6 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
