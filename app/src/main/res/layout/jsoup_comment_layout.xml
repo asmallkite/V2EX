@@ -28,7 +28,6 @@
 
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -58,7 +57,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/node_title"
+                android:id="@+id/comment"
                 android:layout_below="@id/name"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -72,7 +71,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/replies_layout"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

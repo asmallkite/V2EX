@@ -5,18 +5,22 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.a10648.v2ex.R;
+import com.example.a10648.v2ex.adapter.JcommentAdapter;
 import com.example.a10648.v2ex.jsoup.DetailJsoup;
-import com.example.a10648.v2ex.jsoup.MyJsoup;
-import com.example.a10648.v2ex.model.JtopicModel;
+import com.example.a10648.v2ex.model.CommentModel;
 import com.example.a10648.v2ex.widget.SelectorImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
@@ -30,9 +34,9 @@ public class DetailActivity extends AppCompatActivity {
     TextView create;
     TextView replies;
     DetailJsoup detailJsoupInstance;
+    RecyclerView comment_recycle_view;
 
     String url_con;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +50,25 @@ public class DetailActivity extends AppCompatActivity {
         detailJsoupInstance = new DetailJsoup(url_con);
 
         new getContentAsyncTask().execute();
-        
+        new getCommentAsynctask().execute();
+        //设置comment_recycle_view
+        setCommentRecyclerView();
+
     }
 
     private void init() {
-        contentDetails = (TextView)findViewById(R.id.content_details);
+        contentDetails = (TextView) findViewById(R.id.content_details);
         avatar = (SelectorImageView) findViewById(R.id.avatar);
         nodename = (TextView) findViewById(R.id.node_name);
         name = (TextView) findViewById(R.id.name);
         create = (TextView) findViewById(R.id.create);
         replies = (TextView) findViewById(R.id.replies);
+        comment_recycle_view = (RecyclerView) findViewById(R.id.comment_recycle_view);
     }
 
     private void display_card_1() {
         //显示二级界面图片
-        ImageLoader.getInstance().loadImage(getIntent().getStringExtra("avatar"),new SimpleImageLoadingListener() {
+        ImageLoader.getInstance().loadImage(getIntent().getStringExtra("avatar"), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 super.onLoadingComplete(imageUri, view, loadedImage);
@@ -72,6 +80,12 @@ public class DetailActivity extends AppCompatActivity {
         create.setText(getIntent().getStringExtra("create"));
         replies.setText(getIntent().getStringExtra("replies"));
 
+
+    }
+
+    public void setCommentRecyclerView() {
+        comment_recycle_view.setItemAnimator(new DefaultItemAnimator());
+        comment_recycle_view.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -90,7 +104,24 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    public class getCommentAsynctask extends AsyncTask<List<CommentModel>, Intent, List<CommentModel>> {
+        @Override
+        protected List<CommentModel> doInBackground(List<CommentModel>... params) {
+            detailJsoupInstance.Jconn();
+            return detailJsoupInstance.getCommentModel();
+        }
 
-
-
+        @Override
+        protected void onPostExecute(List<CommentModel> commentModels) {
+            super.onPostExecute(commentModels);
+            if (commentModels.size() == 0) {
+                CommentModel a_model = new CommentModel("https://cdn.v2ex.co/gravatar/e34779a3ab6ef091c44f2fd4b1c8e60b?s=48&d=retro",
+                        "Livid", "2分钟前", "来抢沙发哈", "3" );
+                commentModels.add(a_model);
+            }
+            comment_recycle_view.setAdapter(new JcommentAdapter(commentModels, DetailActivity.this));
+        }
+    }
 }
+
+
