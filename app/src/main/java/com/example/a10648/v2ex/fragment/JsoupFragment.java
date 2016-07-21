@@ -94,10 +94,10 @@ public class JsoupFragment extends Fragment {
 
         if (db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
             getDbData();
-        } else if (MyApplication.isNetWorkConnected == 0) {
-            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (MyApplication.isNetWorkConnected > 0) {
             new JsoupTask().execute();
+        } else {
+            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
         }
 
         JRecycleViewAdapter jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
