@@ -13,7 +13,6 @@
     card_view:cardCornerRadius="2dp">
 
     <RelativeLayout
-        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -29,11 +28,10 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
-            android:layout_width="match_parent"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
-            android:layout_toStartOf="@id/replies_layout"
             android:layout_toEndOf="@id/avatar">
 
             <TextView
@@ -80,9 +78,8 @@
             android:id="@+id/replies_layout"
             android:layout_width="20dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp">
 
             <TextView
