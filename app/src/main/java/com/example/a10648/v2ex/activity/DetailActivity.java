@@ -28,6 +28,8 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity";
 
+    /*二级界面第二个cardView*/
+    /*这块是文章正文 文字和图片，最多五张图片，文章里面不够五张，有几张显示几张*/
     TextView contentDetails;
     ImageView img_1;
     ImageView img_2;
@@ -35,6 +37,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageView img_4;
     ImageView img_5;
 
+    /*二级界面第一个cardView*/
     SelectorImageView avatar;
     TextView nodename;
     TextView name;
@@ -42,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView replies;
     DetailJsoup detailJsoupInstance;
 
+    /*二级界面第三个cardView*/
     RecyclerView comment_recycle_view;
 
     String url_con;
@@ -113,41 +117,26 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<String> s) {
             super.onPostExecute(s);
-            ImageLoader.getInstance().loadImage(s.get(0), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    img_1.setImageBitmap(loadedImage);
+
+            for (int i = 0 ; i < s.size() - 1; i ++) {
+                if (i == 1) {
+                    img_1 = img_2;
+                } else if (i == 2) {
+                    img_1 = img_3;
+                } else if (i == 3) {
+                    img_1 = img_4;
+                }else if (i == 4) {
+                    img_1 = img_5;
                 }
-            });
-            ImageLoader.getInstance().loadImage(s.get(1), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    img_2.setImageBitmap(loadedImage);
-                }
-            });
-            ImageLoader.getInstance().loadImage(s.get(2), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    img_3.setImageBitmap(loadedImage);
-                }
-            });
-            ImageLoader.getInstance().loadImage(s.get(3), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    img_4.setImageBitmap(loadedImage);
-                }
-            });
-            ImageLoader.getInstance().loadImage(s.get(4), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    img_5.setImageBitmap(loadedImage);
-                }
-            });
+                ImageLoader.getInstance().loadImage(s.get(i), new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        super.onLoadingComplete(imageUri, view, loadedImage);
+                        img_1.setImageBitmap(loadedImage);
+                    }
+                });
+            }
+
 //            contentDetails.setText(s); //这个setText 方法必须在onPostExecute中，否则显示不出来
         }
     }
