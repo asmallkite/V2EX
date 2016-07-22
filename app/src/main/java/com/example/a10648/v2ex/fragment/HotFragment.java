@@ -125,7 +125,7 @@ public class HotFragment extends Fragment {
                     }
                 }
                 cursor.close();
-                
+
             }
         });
 

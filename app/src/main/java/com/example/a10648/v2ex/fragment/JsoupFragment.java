@@ -9,10 +9,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +38,15 @@ import java.util.List;
  * 爬数据的通用fragment
  */
 public class JsoupFragment extends Fragment {
+
+    public static final String TAG = "JsoupFragment";
     //参数传递的键值
     private static final String ARG = "arg";
 
+
     RecyclerView j_recycle_view;
+    SwipeRefreshLayout swipeRefreshLayout;
+    JRecycleViewAdapter jRecycleViewAdapter;
 
     String tab_url;
 
@@ -80,10 +88,48 @@ public class JsoupFragment extends Fragment {
         db = dbHelper.getWritableDatabase();
 
 
+        swipeRefreshLayout = (SwipeRefreshLayout) j_view.findViewById(R.id.j_swipe_refresh);
         j_recycle_view = (RecyclerView)j_view.findViewById(R.id.j_recycle_view);
 
+        initSwipeRefresh();
         initRecyclerView();
         return j_view;
+    }
+
+    public void initSwipeRefresh () {
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //刷新执行网络获取操作
+                new JsoupTask().execute();
+
+                Cursor cursor = db.query(getArguments().getString(ARG), null, null, null, null,  null, null);
+                if (cursor.moveToFirst()) {
+                    String title_old = cursor.getString(cursor.getColumnIndex("Jtitle"));
+                    Log.d(TAG, "old \n " + title_old + "new \n" + jtopicModels.get(0).getJtitle() + "\n");
+                    if (jtopicModels.get(0).getJtitle().equals(title_old)) {
+
+                        Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    } else {
+                        jRecycleViewAdapter.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "有更新", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+                cursor.close();
+
+            }
+        });
+
     }
 
 
@@ -100,7 +146,7 @@ public class JsoupFragment extends Fragment {
             Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
         }
 
-        JRecycleViewAdapter jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
+        jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
         jRecycleViewAdapter.notifyDataSetChanged();
         jRecycleViewAdapter.setmOnItemClickListener(new JRecycleViewAdapter.JOnRecycleViewItemClickListener() {
@@ -144,20 +190,22 @@ public class JsoupFragment extends Fragment {
         protected void onPostExecute(List<JtopicModel> jtopicModels) {
             super.onPostExecute(jtopicModels);
 
-            //执行数据库添加操作
-            for (int i = 0; i < jtopicModels.size(); i++) {
-                ContentValues values = new ContentValues();
-                values.put("Javatar", jtopicModels.get(i).getJavatar());
-                values.put("Jurl", jtopicModels.get(i).getJurl());
-                values.put("Jtitle", jtopicModels.get(i).getJtitle());
-                values.put("Jnodename", jtopicModels.get(i).getJnodename());
-                values.put("Jcreated", jtopicModels.get(i).getJcreated());
-                values.put("Jusername", jtopicModels.get(i).getJusername());
-                values.put("Jreplies", jtopicModels.get(i).getJreplies());
+         if ( !db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
+             //执行数据库添加操作
+             for (int i = 0; i < jtopicModels.size(); i++) {
+                 ContentValues values = new ContentValues();
+                 values.put("Javatar", jtopicModels.get(i).getJavatar());
+                 values.put("Jurl", jtopicModels.get(i).getJurl());
+                 values.put("Jtitle", jtopicModels.get(i).getJtitle());
+                 values.put("Jnodename", jtopicModels.get(i).getJnodename());
+                 values.put("Jcreated", jtopicModels.get(i).getJcreated());
+                 values.put("Jusername", jtopicModels.get(i).getJusername());
+                 values.put("Jreplies", jtopicModels.get(i).getJreplies());
 
-                db.insert(getArguments().getString(ARG), null, values);
-                values.clear();
-            }
+                 db.insert(getArguments().getString(ARG), null, values);
+                 values.clear();
+             }
+         }
         }
     }
 
