@@ -97,8 +97,6 @@ public class DetailActivity extends AppCompatActivity  {
         name.setText(getIntent().getStringExtra("name"));
         create.setText(getIntent().getStringExtra("create"));
         replies.setText(getIntent().getStringExtra("replies"));
-
-
     }
 
     public void setCommentRecyclerView() {

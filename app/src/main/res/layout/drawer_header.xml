@@ -12,10 +12,11 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_margin="@dimen/spacing_large"
-        android:src="@drawable/doraemon"/>
+        android:src="@drawable/ic_launcher"/>
 
     <TextView
         android:id="@+id/duo_la"
+        android:layout_alignStart="@id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/avatar"
@@ -26,6 +27,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
     <TextView
         android:id="@+id/email"
+        android:layout_alignStart="@id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/duo_la"

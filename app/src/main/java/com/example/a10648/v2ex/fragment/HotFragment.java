@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class HotFragment extends Fragment {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "HotFragment";
 
     List<TopicModel> links = new ArrayList<>();
 
@@ -148,6 +148,7 @@ public class HotFragment extends Fragment {
                 intent.putExtra("node_name", data.getNodename());
                 intent.putExtra("name", data.getUsername());
                 intent.putExtra("create", data.getCreated());
+                Log.d(TAG, data.getCreated() + "\nand\n" + data.getReplies());
                 intent.putExtra("replies", data.getReplies());
                 startActivity(intent);
             }
