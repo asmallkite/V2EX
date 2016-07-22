@@ -47,6 +47,7 @@ public class HotFragment extends Fragment {
 
 
     RecyclerView recyclerView;
+    MyRecyclerViewAdapter2 adapter2;
     SwipeRefreshLayout swipeRefreshLayout;
 
 
@@ -77,6 +78,7 @@ public class HotFragment extends Fragment {
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
+
         initSwipeRefresh();
         initRecyclerView();
 
@@ -99,14 +101,31 @@ public class HotFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                                swipeRefreshLayout.setRefreshing(false);
-                                Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
-                    }
-                }        , 4000   );
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                                swipeRefreshLayout.setRefreshing(false);
+//                                Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+//                    }
+//                }        , 4000   );
+                //刷新执行网络获取操作
+               new MyTask().execute();
 
+                Cursor cursor = db.query("Topic2", null, null, null, null,  null, null);
+                if (cursor.moveToFirst()) {
+                    String title_old = cursor.getString(cursor.getColumnIndex("title"));
+                    if (links.get(0).getTitle().equals(title_old)) {
+                        Log.d(TAG, "old \n " + title_old + "new \n" + links.get(0).getTitle());
+                        Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    } else {
+                        adapter2.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "有更新", Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+                cursor.close();
+                
             }
         });
 
@@ -131,7 +150,7 @@ public class HotFragment extends Fragment {
             new MyTask().execute();
         }
 
-        MyRecyclerViewAdapter2 adapter2 = new MyRecyclerViewAdapter2(links, getContext());
+        adapter2 = new MyRecyclerViewAdapter2(links, getContext());
         recyclerView.setAdapter(adapter2);
         adapter2.notifyDataSetChanged();
         adapter2.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
