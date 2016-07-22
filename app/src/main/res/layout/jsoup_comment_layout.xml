@@ -58,7 +58,6 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:background="#f5f5f5"
                 android:text="加 ta.key 参数。一直这么用，连接需要些时间，连接上了比较稳定，经常 v
                 pn 线路能传输上 g 流量。我做的 IP 分流，国内直连，国外 vpn"
                 android:textSize="12sp"/>

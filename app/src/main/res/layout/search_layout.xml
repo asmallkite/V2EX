@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,6 +11,17 @@
         android:orientation="horizontal">
 
 
+        <ImageButton
+            android:id="@+id/search_btn_back"
+            android:src="@drawable/backspace"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
         <FrameLayout
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -21,7 +31,7 @@
                 android:id="@+id/search_et_input"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
-                android:drawableLeft="@drawable/search_icon"
+                android:drawableStart="@drawable/search_icon"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,25 +43,15 @@
 
             <ImageView
                 android:visibility="gone"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/iv_delete_bg"
                 android:id="@+id/search_iv_delete"
-                android:layout_gravity="right|center_vertical"
+                android:layout_gravity="end|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </FrameLayout>
 
-        <Button
-            android:id="@+id/search_btn_back"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/holo_green_light"
-            android:layout_width="@dimen/btn_width"
-            android:layout_height="@dimen/btn_height"
-            android:text="返回"
-            android:textColor="@color/color_white"/>
+
     </LinearLayout>
 
     <ListView

@@ -1,19 +1,15 @@
 package com.example.a10648.v2ex.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyFragPaAdapter;
 import com.example.a10648.v2ex.jsoup.MyJsoup;
-
 import java.util.ArrayList;
 import java.util.List;
 

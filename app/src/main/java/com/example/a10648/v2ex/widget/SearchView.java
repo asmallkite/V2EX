@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,7 +39,7 @@ public class SearchView  extends LinearLayout implements View.OnClickListener  {
     /**
      * 返回按钮
      */
-    private Button btnBack;
+     ImageButton btnBack;
 
     /**
      * 上下文对象
@@ -84,7 +85,7 @@ public class SearchView  extends LinearLayout implements View.OnClickListener  {
     private void initViews() {
         etInput = (EditText) findViewById(R.id.search_et_input);
         ivDelete = (ImageView) findViewById(R.id.search_iv_delete);
-        btnBack = (Button) findViewById(R.id.search_btn_back);
+        btnBack = (ImageButton) findViewById(R.id.search_btn_back);
         lvTips = (ListView) findViewById(R.id.search_lv_tips);
 
         lvTips.setOnItemClickListener(             new AdapterView.OnItemClickListener() {
@@ -119,7 +120,7 @@ public class SearchView  extends LinearLayout implements View.OnClickListener  {
 
     /**
      * 通知监听者 进行搜索操作
-     * @param text
+     *
      */
     private void notifyStartSearching(String text){
         if (mListener != null) {

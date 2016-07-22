@@ -236,10 +236,18 @@ public class SearchActivity extends AppCompatActivity implements SearchView.Sear
         resultAdapter.setmOnItemClickListener(new MyRecyclerViewAdapter2.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, TopicModel data) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(data.url));
-                startActivity(intent);
+//                Intent intent = new Intent(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse(data.url));
+//                startActivity(intent);
 
+                Intent intent = new Intent(SearchActivity.this, DetailActivity.class);
+                intent.putExtra("url_con", data.getUrl());
+                intent.putExtra("avatar", data.getAvatar());
+                intent.putExtra("node_name", data.getNodename());
+                intent.putExtra("name", data.getUsername());
+                intent.putExtra("create", data.getCreated());
+                intent.putExtra("replies", data.getReplies());
+                startActivity(intent);
             }
         });
     }

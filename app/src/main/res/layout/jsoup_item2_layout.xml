@@ -120,9 +120,7 @@
                     android:id="@+id/content_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:text="很多人一定对 2013 年打车软件“烧钱战”记忆犹新，滴滴、快的、易达打车等打车软件通过对用户高额补贴跑马圈地，而目前的视频直播行业，正如同 2013 年的打车软件，处于探索起步阶段。政策模糊，商业模式不明确，用户粘性不高，市场不规范，运营成本高导致视频直播行业乱象丛生。
-全民的映客，在内容上的边界越来越模糊，无论是 PGUGC 甚至是 OGC ，无"/>
+                    android:padding="10dp" />
 
 
             </LinearLayout>
