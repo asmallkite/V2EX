@@ -1,5 +1,10 @@
 package com.example.a10648.v2ex.model;
 
+import com.example.a10648.v2ex.MyApplication;
+import com.example.a10648.v2ex.dao.DataManager;
+
+import java.util.List;
+
 /**
  * Created by 10648 on 2016/7/19 0019.
  * 此model在抓取数据时使用
@@ -19,6 +24,9 @@ public class JtopicModel {
     public String Jusername;
 
     public String Jreplies;
+
+    public JtopicModel() {
+    }
 
     public JtopicModel(String javatar, String jurl, String jtitle, String jnodename, String jcreated,
                        String jusername, String jreplies) {
@@ -86,4 +94,9 @@ public class JtopicModel {
     public void setJreplies(String jreplies) {
         Jreplies = jreplies;
     }
+
+    public List<JtopicModel> loadFromDb(String key, int currentItemCount) {
+        return DataManager.getDataFromDb(key, currentItemCount,
+                MyApplication.getContext(),"Topics.db" , null, 1);
+     }
 }

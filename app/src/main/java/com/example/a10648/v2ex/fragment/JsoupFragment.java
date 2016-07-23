@@ -30,6 +30,7 @@ import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.jsoup.MyJsoup;
 import com.example.a10648.v2ex.model.JtopicModel;
 import com.example.a10648.v2ex.model.TopicModel;
+import com.example.a10648.v2ex.presenter.Presenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,8 @@ public class JsoupFragment extends Fragment {
     public static final String TAG = "JsoupFragment";
     //参数传递的键值
     private static final String ARG = "arg";
+    //是否第一次创建
+    private boolean isFirstCreate = true;
 
 
     RecyclerView j_recycle_view;
@@ -58,6 +61,8 @@ public class JsoupFragment extends Fragment {
     private MyDatabaseHelper dbHelper; //数据库对象
     SQLiteDatabase db;
 
+
+    Presenter presenter;
 
     public JsoupFragment() {
         // Required empty public constructor
@@ -91,6 +96,7 @@ public class JsoupFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) j_view.findViewById(R.id.j_swipe_refresh);
         j_recycle_view = (RecyclerView)j_view.findViewById(R.id.j_recycle_view);
 
+        initData();
         initSwipeRefresh();
         initRecyclerView();
         return j_view;
@@ -105,30 +111,7 @@ public class JsoupFragment extends Fragment {
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //刷新执行网络获取操作
-                new JsoupTask().execute();
 
-                Cursor cursor = db.query(getArguments().getString(ARG), null, null, null, null,  null, null);
-                if (cursor.moveToFirst()) {
-                    String title_old = cursor.getString(cursor.getColumnIndex("Jtitle"));
-                    Log.d(TAG, "old \n " + title_old + "new \n" + jtopicModels.get(0).getJtitle() + "\n");
-                    if (jtopicModels.get(0).getJtitle().equals(title_old)) {
-
-                        Toast.makeText(getActivity(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
-                        swipeRefreshLayout.setRefreshing(false);
-                    } else {
-                        jRecycleViewAdapter.notifyDataSetChanged();
-                        Toast.makeText(getActivity(), "有更新", Toast.LENGTH_SHORT).show();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }
-                cursor.close();
-
-            }
-        });
 
     }
 
@@ -138,13 +121,13 @@ public class JsoupFragment extends Fragment {
         j_recycle_view.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        if (db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
-            getDbData();
-        } else if (MyApplication.isNetWorkConnected > 0) {
-            new JsoupTask().execute();
-        } else {
-            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
-        }
+//        if (db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
+//            getDbData();
+//        } else if (MyApplication.isNetWorkConnected > 0) {
+//            new JsoupTask().execute();
+//        } else {
+//            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
+//        }
 
         jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
@@ -152,11 +135,6 @@ public class JsoupFragment extends Fragment {
         jRecycleViewAdapter.setmOnItemClickListener(new JRecycleViewAdapter.JOnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, JtopicModel data) {
-//                Intent intent = new Intent(Intent.ACTION_VIEW);
-//                intent.setData(Uri.parse(data.Jurl));
-//                startActivity(intent);
-//                Intent intent = new Intent(getActivity(), DetailActivity.class);
-//                startActivity(intent);
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("url_con", data.getJurl());
                 intent.putExtra("avatar", data.getJavatar());
@@ -165,12 +143,68 @@ public class JsoupFragment extends Fragment {
                 intent.putExtra("create", data.getJcreated());
                 intent.putExtra("replies", data.getJreplies());
                 startActivity(intent);
-
             }
         });
+    }
 
+    /**
+     * 初始化数据，并调用Presenter
+     */
+    public void initData() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+        presenter = new Presenter(this);
+        presenter.refresh(getArguments().getString(ARG));
+    }
+
+    public void onRefresh (List<JtopicModel> list_model) {
+        if (list_model == null) {
+            Toast.makeText(getContext(), "网络不可用-刷新失败", Toast.LENGTH_SHORT).show();
+            swipeRefreshLayout.setRefreshing(false);
+        }
+        if (isFirstCreate && list_model.size() < 6) {
+            presenter.load(getArguments().getString(ARG), jtopicModels.size());
+            isFirstCreate = false;
+            //加载完数据取消加载进度条
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
+        Toast.makeText(MyApplication.getContext(), list_model.size() == 0 ?
+        "已经是最新数据哦" : ("已经刷新"), Toast.LENGTH_SHORT).show();
+        jtopicModels.addAll(0, list_model);
+        jRecycleViewAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void onLoad (List<JtopicModel> jtopicModels) {
+        if (jtopicModels == null) {
+            return;
+        }
+
+        jtopicModels.addAll(jtopicModels);
+        jRecycleViewAdapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
     public class JsoupTask extends AsyncTask<JtopicModel, Integer, List<JtopicModel>> {
