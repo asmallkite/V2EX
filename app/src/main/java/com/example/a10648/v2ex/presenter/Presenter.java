@@ -34,8 +34,7 @@ public class Presenter {
         protected List<JtopicModel> doInBackground(String... params) {
             MyJsoup myJsoup = new MyJsoup(params[0]);
             myJsoup.Jconn();
-            List<JtopicModel> list_model = myJsoup.getTopicModel();
-            return list_model;
+            return myJsoup.getTopicModel();
         }
 
         @Override

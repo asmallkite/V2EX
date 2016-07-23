@@ -5,16 +5,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +22,10 @@ import com.example.a10648.v2ex.MyApplication;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.activity.DetailActivity;
 import com.example.a10648.v2ex.adapter.JRecycleViewAdapter;
-import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.jsoup.MyJsoup;
 import com.example.a10648.v2ex.model.JtopicModel;
-import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.presenter.Presenter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +37,27 @@ public class JsoupFragment extends Fragment {
     public static final String TAG = "JsoupFragment";
     //参数传递的键值
     private static final String ARG = "arg";
+    //将传过来的键值保存下
+    String tab_url = null;
+    //是否第一次加载
+    boolean isFirstLoad = true;
     //是否第一次创建
     private boolean isFirstCreate = true;
+    //当前fragment 是否可见
+    boolean isVisible = false;
+    //是否初始化了fragment view
+    boolean isViewInit = false;
 
-
+    //oncreateView 方法中的view 在初始化控件时引用
+    View j_view;
     RecyclerView j_recycle_view;
     SwipeRefreshLayout swipeRefreshLayout;
     JRecycleViewAdapter jRecycleViewAdapter;
+    private int firstVisibleItem;
+    private int lastVisibleItem;
+    //在获取recycleview 第一个 和 最后一个 item位置时调用
+    private LinearLayoutManager linearLayoutManager;
 
-    String tab_url;
 
     List<JtopicModel> jtopicModels = new ArrayList<>();
 
@@ -81,28 +87,64 @@ public class JsoupFragment extends Fragment {
         return jsoupFragment;
     }
 
-
+    @Override
+    public void onCreate( Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tab_url = getArguments().getString(ARG);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View j_view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_jsoup, container, false);
+        j_view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_jsoup, container, false);
+
+        initSwipeRefresh();
+        initRecyclerView();
+        isViewInit = true;
 
         //创建SQLiteOpenHelper实例
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) j_view.findViewById(R.id.j_swipe_refresh);
-        j_recycle_view = (RecyclerView)j_view.findViewById(R.id.j_recycle_view);
 
-        initData();
-        initSwipeRefresh();
-        initRecyclerView();
+
+
+        lazyLoadFragment();
+
         return j_view;
     }
 
+    /**
+     * 懒加载
+     * 一个Activity里面可能会以viewpager（或其他容器）与多个Fragment来组合使用，而如果每
+     * 个fragment都需要去加载数据，或从本地加载，或从网络加载，那么在这个activity刚创建的
+     * 时候就变成需要初始化大量资源。这样的结果，我们当然不会满意
+     * 。那么，能不能做到当切换到这个fragment的时候，它才去初始化呢？
+     * @param isVisibleToUser 默认为ture
+     */
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser) {
+            isVisible = true;
+            lazyLoadFragment();
+        } else {
+            isVisible = false;
+        }
+    }
+
+    private void lazyLoadFragment() {
+
+        if (isVisible && isFirstLoad && isViewInit) {
+            initData();
+            isFirstLoad = false;
+        }
+    }
+
+
     public void initSwipeRefresh () {
+        swipeRefreshLayout = (SwipeRefreshLayout)j_view.findViewById(R.id.j_swipe_refresh);
         swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light,
@@ -117,21 +159,16 @@ public class JsoupFragment extends Fragment {
 
 
     public void initRecyclerView () {
+        j_recycle_view = (RecyclerView)j_view.findViewById(R.id.j_recycle_view);
         j_recycle_view.setItemAnimator(new DefaultItemAnimator());
         j_recycle_view.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-//        if (db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
-//            getDbData();
-//        } else if (MyApplication.isNetWorkConnected > 0) {
-//            new JsoupTask().execute();
-//        } else {
-//            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
-//        }
-
+        linearLayoutManager = new LinearLayoutManager(getContext());
         jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
         jRecycleViewAdapter.notifyDataSetChanged();
+        /**
+         * 点击事件，进入二级界面
+         */
         jRecycleViewAdapter.setmOnItemClickListener(new JRecycleViewAdapter.JOnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, JtopicModel data) {
@@ -143,6 +180,30 @@ public class JsoupFragment extends Fragment {
                 intent.putExtra("create", data.getJcreated());
                 intent.putExtra("replies", data.getJreplies());
                 startActivity(intent);
+            }
+        });
+        /**
+         * 滑动事件
+         */
+        j_recycle_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    if (firstVisibleItem == 0 ){
+                        swipeRefreshLayout.setRefreshing(true);
+                        presenter.refresh(tab_url);// no point 空指针异常
+                    } else if (lastVisibleItem + 1 == jRecycleViewAdapter.getItemCount()) {
+                        presenter.load(tab_url, jtopicModels.size());
+                        Toast.makeText(getContext(), "正在加载，请稍后", Toast.LENGTH_SHORT).show();
+                    }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
             }
         });
     }
@@ -184,12 +245,12 @@ public class JsoupFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    public void onLoad (List<JtopicModel> jtopicModels) {
+    public void onLoad (List<JtopicModel> jtopicModel2) {
         if (jtopicModels == null) {
             return;
         }
 
-        jtopicModels.addAll(jtopicModels);
+        jtopicModels.addAll(jtopicModel2);
         jRecycleViewAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
