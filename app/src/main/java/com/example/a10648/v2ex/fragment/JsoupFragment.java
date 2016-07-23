@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -124,6 +125,7 @@ public class JsoupFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        Log.e(TAG, "KA看你到底有没有执行");
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadFragment();
@@ -138,6 +140,7 @@ public class JsoupFragment extends Fragment {
             return;
         }
         initData();
+        Log.e(TAG, "KA看你到底有没有执行  w s  initdata");
         isFirstLoad = false;
     }
 
@@ -153,6 +156,20 @@ public class JsoupFragment extends Fragment {
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        swipeRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getContext(), "已经是最新数据哦", Toast.LENGTH_SHORT).show();
+                    }
+                }        , 4000   );
+
+            }
+        });
 
     }
 

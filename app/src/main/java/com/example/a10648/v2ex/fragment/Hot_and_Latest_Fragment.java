@@ -19,6 +19,8 @@ import com.example.a10648.v2ex.dao.MyDatabaseHelper;
  * 因为最新和最热 是由API获取的。所有区别爬虫获取的tab
  * 7月23日 我将HotFragment。java 和 LatestFragment.java 合并在一起
  * 二者只是api和数据表名不一样
+ *
+ * 暂时没有完成
  */
 public class Hot_and_Latest_Fragment extends Fragment {
 
