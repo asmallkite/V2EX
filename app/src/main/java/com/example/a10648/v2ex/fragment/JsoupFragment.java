@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,8 +78,8 @@ public class JsoupFragment extends Fragment {
 
     /**
      * 为了方便EyeFragment 与 JsoupFragment的参数传递，用newInstance 的方法去传递参数
-     * @param arg
-     * @return
+     * @param arg 传的参数
+     * @return fragment
      */
     public static Fragment newInstance (String arg) {
         JsoupFragment jsoupFragment = new JsoupFragment();
@@ -106,10 +108,6 @@ public class JsoupFragment extends Fragment {
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-
-
-
-
         lazyLoadFragment();
 
         return j_view;
@@ -136,10 +134,11 @@ public class JsoupFragment extends Fragment {
 
     private void lazyLoadFragment() {
 
-        if (isVisible && isFirstLoad && isViewInit) {
-            initData();
-            isFirstLoad = false;
+        if ( !isVisible || !isFirstLoad || !isViewInit) {
+            return;
         }
+        initData();
+        isFirstLoad = false;
     }
 
 
@@ -165,7 +164,6 @@ public class JsoupFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         jRecycleViewAdapter = new JRecycleViewAdapter(jtopicModels, getActivity());
         j_recycle_view.setAdapter(jRecycleViewAdapter);
-        jRecycleViewAdapter.notifyDataSetChanged();
         /**
          * 点击事件，进入二级界面
          */
@@ -189,19 +187,20 @@ public class JsoupFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                Log.d(TAG, "\n setOnScrollListen 调用啦\n");
+                if (newState == RecyclerView.SCROLL_STATE_IDLE  && newState == RecyclerView.SCROLL_STATE_IDLE)
                     if (firstVisibleItem == 0 ){
                         swipeRefreshLayout.setRefreshing(true);
                         presenter.refresh(tab_url);// no point 空指针异常
-                    } else if (lastVisibleItem + 1 == jRecycleViewAdapter.getItemCount()) {
+                    } else if (lastVisibleItem + 1 == jRecycleViewAdapter.getItemCount()  && newState == RecyclerView.SCROLL_STATE_IDLE) {
                         presenter.load(tab_url, jtopicModels.size());
+
                         Toast.makeText(getContext(), "正在加载，请稍后", Toast.LENGTH_SHORT).show();
                     }
             }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
                 firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
             }
@@ -218,16 +217,20 @@ public class JsoupFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        presenter = new Presenter(this);
-        presenter.refresh(getArguments().getString(ARG));
+        if (MyApplication.isNetWorkConnected > 0){
+            presenter = new Presenter(this);
+            presenter.refresh(tab_url);
+        }
+
     }
 
     public void onRefresh (List<JtopicModel> list_model) {
         if (list_model == null) {
             Toast.makeText(getContext(), "网络不可用-刷新失败", Toast.LENGTH_SHORT).show();
             swipeRefreshLayout.setRefreshing(false);
+            return;
         }
-        if (isFirstCreate && list_model.size() < 6) {
+        if (isFirstCreate && list_model.size() < 5) {
             presenter.load(getArguments().getString(ARG), jtopicModels.size());
             isFirstCreate = false;
             //加载完数据取消加载进度条
@@ -239,10 +242,30 @@ public class JsoupFragment extends Fragment {
             });
         }
         Toast.makeText(MyApplication.getContext(), list_model.size() == 0 ?
-        "已经是最新数据哦" : ("已经刷新"), Toast.LENGTH_SHORT).show();
+        "已经是最新数据哦" : ("客官，您的菜，请慢用"), Toast.LENGTH_SHORT).show();
         jtopicModels.addAll(0, list_model);
         jRecycleViewAdapter.notifyDataSetChanged();
+        saveToDb();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void saveToDb() {
+        if ( !db.query(getArguments().getString(ARG), null, null, null, null,  null, null).moveToFirst()) {
+            //执行数据库添加操作
+            for (int i = 0; i < jtopicModels.size(); i++) {
+                ContentValues values = new ContentValues();
+                values.put("Javatar", jtopicModels.get(i).getJavatar());
+                values.put("Jurl", jtopicModels.get(i).getJurl());
+                values.put("Jtitle", jtopicModels.get(i).getJtitle());
+                values.put("Jnodename", jtopicModels.get(i).getJnodename());
+                values.put("Jcreated", jtopicModels.get(i).getJcreated());
+                values.put("Jusername", jtopicModels.get(i).getJusername());
+                values.put("Jreplies", jtopicModels.get(i).getJreplies());
+
+                db.insert(getArguments().getString(ARG), null, values);
+                values.clear();
+            }
+        }
     }
 
     public void onLoad (List<JtopicModel> jtopicModel2) {
@@ -268,7 +291,7 @@ public class JsoupFragment extends Fragment {
 
 
 
-    public class JsoupTask extends AsyncTask<JtopicModel, Integer, List<JtopicModel>> {
+  /*  public class JsoupTask extends AsyncTask<JtopicModel, Integer, List<JtopicModel>> {
 
         @Override
         protected List<JtopicModel> doInBackground(JtopicModel... params) {
@@ -304,9 +327,9 @@ public class JsoupFragment extends Fragment {
         }
     }
 
-    /**
+    *//**
      * 获取db 数据
-     */
+     *//*
     private void getDbData() {
         //查询Topic.db中所有的数据
         Cursor cursor = db.query(getArguments().getString(ARG), null, null, null, null,  null, null);
@@ -325,5 +348,5 @@ public class JsoupFragment extends Fragment {
             } while (cursor.moveToNext());
         }
         cursor.close();
-    }
+    }*/
 }

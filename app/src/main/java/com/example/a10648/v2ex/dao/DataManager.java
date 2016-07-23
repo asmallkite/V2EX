@@ -25,7 +25,7 @@ public class DataManager {
         List<JtopicModel> modelList = new ArrayList<>();
 
         if (cursor.moveToLast() && cursor.move(-currentItemCount)) {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 10; i++) {
                 String Javatar = cursor.getString(cursor.getColumnIndex("Javatar"));
                 String Jurl = cursor.getString(cursor.getColumnIndex("Jurl"));
                 String Jtitle = cursor.getString(cursor.getColumnIndex("Jtitle"));
