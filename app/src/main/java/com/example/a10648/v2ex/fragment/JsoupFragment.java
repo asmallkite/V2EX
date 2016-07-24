@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class JsoupFragment extends Fragment {
 
-    public static final String TAG = "JsoupFragment";
+//    public static final String TAG = "JsoupFragment";
     //参数传递的键值
     private static final String ARG = "arg";
     //将传过来的键值保存下
@@ -202,11 +202,11 @@ public class JsoupFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE  && newState == RecyclerView.SCROLL_STATE_IDLE)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE )
                     if (firstVisibleItem == 0 ){
                         swipeRefreshLayout.setRefreshing(true);
                         presenter.refresh(tab_url);// no point 空指针异常
-                    } else if (lastVisibleItem + 1 == jRecycleViewAdapter.getItemCount()  && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    } else if (lastVisibleItem + 1 == jRecycleViewAdapter.getItemCount()) {
                         presenter.load(tab_url, jtopicModels.size());
 
                         Toast.makeText(getContext(), "正在加载，请稍后", Toast.LENGTH_SHORT).show();

@@ -48,7 +48,7 @@ public class AllNodeActivity extends AppCompatActivity {
 
 
         progressDialog = new ProgressDialog(AllNodeActivity.this);
-        progressDialog.setTitle("客观，您的菜马上就好");
+        progressDialog.setTitle("客官，您的菜马上就好");
         progressDialog.setMessage("来咯·······");
         progressDialog.show();
         new Thread(new Runnable() {
