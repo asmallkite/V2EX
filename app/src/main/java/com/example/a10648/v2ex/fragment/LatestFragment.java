@@ -1,19 +1,23 @@
 package com.example.a10648.v2ex.fragment;
 
 
+
+
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,98 +31,78 @@ import com.example.a10648.v2ex.adapter.MyRecyclerViewAdapter2;
 import com.example.a10648.v2ex.dao.MyDatabaseHelper;
 import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.net.HttpConnect;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 7/23
- * 因为最新和最热 是由API获取的。所有区别爬虫获取的tab
- * 7月23日 我将HotFragment。java 和 latestFragment.java 合并在一起
- * 二者只是api和数据表名不一样
- *
- * 暂时没有完成
+ * Created by 李争 on 2016/7/15 0015.
+ * 这是最新fragment的代码
  */
-public class Hot_and_Latest_Fragment extends Fragment {
 
-    public static final String LATEST_URL = "https://www.v2ex.com/api/topics/latest.json";
-    public static final String Hot_URL ="https://www.v2ex.com/api/topics/hot.json";
-
-    //参数传递的键值
-    private static final String ARG = "arg";
-    String arg;
+public class LatestFragment extends Fragment {
+    public static final String TAG = "MainActivity";
 
     List<TopicModel> links = new ArrayList<>();
 
 
+    RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog = null;
+
+
+    public static final String LATEST_URL = "https://www.v2ex.com/api/topics/latest.json";
+
 
     //数据库相关实例
-    private MyDatabaseHelper dbHelper; //数据库对象
+    MyDatabaseHelper dbHelper; //数据库对象
     SQLiteDatabase db;
-    String table_name ;
-
-    //RecycleView and SwipeRefreshLayout
-    RecyclerView recyclerView;
-    MyRecyclerViewAdapter2 adapter2;
-    SwipeRefreshLayout swipeRefreshLayout;
 
 
-
-    /**
-     * 空的构造函数，方便其他类 创建此实例。配合使用getInstance
-     */
-    public Hot_and_Latest_Fragment() {
+    public LatestFragment() {
         // Required empty public constructor
     }
 
 
-    /**
-     * 在EyeFragment 创建实例 调用
-     * @param arg api值， 其键为ARG，值为最新和最热话题的api 此处为完整的API
-     * @return
-     */
-    public static Fragment newInstance (String arg) {
-        Hot_and_Latest_Fragment hot_and_latest_fragment = new Hot_and_Latest_Fragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ARG, arg);
-        hot_and_latest_fragment.setArguments(bundle);
-        return hot_and_latest_fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        arg = getArguments().getString(ARG);
-        if (arg.equals(LATEST_URL)) {
-                table_name = "Topic";
-        } else {
-            table_name = "Topic2";
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View hot_and_latest_view = inflater.inflate(R.layout.fragment_hot_and__latest_, container, false);
+
+        View latest_view = LayoutInflater.from(getActivity()).inflate(R.layout.eye_latest_layout, container, false);
+
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("客观，您的菜马上就好");
+        progressDialog.setMessage("来咯·······");
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }).start();
+
+        recyclerView = (RecyclerView) latest_view.findViewById(R.id.recycle_view);
+        swipeRefreshLayout = (SwipeRefreshLayout) latest_view.findViewById(R.id.refresh_widget);
 
         //创建SQLiteOpenHelper实例
         dbHelper = new MyDatabaseHelper(getActivity(), "Topics.db", null, 1);
         db = dbHelper.getWritableDatabase();
 
-        recyclerView = (RecyclerView) hot_and_latest_view.findViewById(R.id.recycle_view);
-        swipeRefreshLayout = (SwipeRefreshLayout) hot_and_latest_view.findViewById(R.id.refresh);
-
-
         initSwipeRefresh();
         initRecyclerView();
 
-
-        return hot_and_latest_view;
+        return latest_view;
     }
+
+
 
     public void initSwipeRefresh () {
         swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
@@ -150,7 +134,7 @@ public class Hot_and_Latest_Fragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        if (db.query(table_name, null, null, null, null,  null, null).moveToFirst()) {
+        if (db.query("Topic", null, null, null, null,  null, null).moveToFirst()) {
             getDbData();
         } else if (MyApplication.isNetWorkConnected == 0) {
             Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
@@ -179,6 +163,8 @@ public class Hot_and_Latest_Fragment extends Fragment {
 
             }
         });
+
+
     }
 
     /**
@@ -191,7 +177,7 @@ public class Hot_and_Latest_Fragment extends Fragment {
 
         @Override
         protected List<TopicModel> doInBackground(TopicModel... params) {
-            String response = HttpConnect.sendRequestWithHttpURLConnection(arg);
+            String response = HttpConnect.sendRequestWithHttpURLConnection(LATEST_URL);
             praseJSONWithJSONObject(response);
             return links;
         }
@@ -201,6 +187,12 @@ public class Hot_and_Latest_Fragment extends Fragment {
             super.onPostExecute(models);
             //执行数据库添加操作
             for (int i = 0; i < models.size(); i++) {
+//                db.execSQL(" insert into Topic ( title , url , content , avatar , " +
+//                        "  username , created , replies , nodename ) " +
+//                        " values ( ? ， ? , ? , ? , ? ，? , ? , ? ) ", new Object[] { models.get(i).getTitle(), models.get(i).getUrl(),
+//                        models.get(i).getContent(), models.get(i).getAvatar(), models.get(i).getUsername(),
+//                        models.get(i).getCreated(), models.get(i).getReplies(), models.get(i).getNodename()});
+
                 ContentValues values = new ContentValues();
                 values.put("title", models.get(i).getTitle());
                 values.put("url", models.get(i).getUrl());
@@ -211,11 +203,16 @@ public class Hot_and_Latest_Fragment extends Fragment {
                 values.put("created", models.get(i).getCreated());
                 values.put("replies", models.get(i).getReplies());
                 values.put("nodename", models.get(i).getNodename());
-                db.insert(table_name, null, values);   //插入数据表哦
+                db.insert("Topic", null, values);
                 values.clear();
+                Log.d(TAG, "插入latest数据执行完毕");
             }
+
+
         }
+
     }
+
 
     /**
      * 对HttpConnect 中的sendRequestWithHttpURLConnection 返回的response 进行解析
@@ -255,13 +252,12 @@ public class Hot_and_Latest_Fragment extends Fragment {
 
         }
     }
-
     /**
      * 获取db 数据
      */
     private void getDbData() {
         //查询Topic.db中所有的数据
-        Cursor cursor = db.query(table_name, null, null, null, null,  null, null);
+        Cursor cursor = db.query("Topic", null, null, null, null,  null, null);
         if (cursor.moveToFirst()) {
             do {
                 String title = cursor.getString(cursor.getColumnIndex("title"));
@@ -279,4 +275,8 @@ public class Hot_and_Latest_Fragment extends Fragment {
         cursor.close();
     }
 
+
+
+
 }
+
