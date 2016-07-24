@@ -3,6 +3,7 @@ package com.example.a10648.v2ex.fragment;
 
 
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -48,6 +49,7 @@ public class LatestFragment extends Fragment {
 
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog = null;
 
 
     public static final String LATEST_URL = "https://www.v2ex.com/api/topics/latest.json";
@@ -69,6 +71,23 @@ public class LatestFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View latest_view = LayoutInflater.from(getActivity()).inflate(R.layout.eye_latest_layout, container, false);
+
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("客观，您的菜马上就好");
+        progressDialog.setMessage("来咯·······");
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }).start();
 
         recyclerView = (RecyclerView) latest_view.findViewById(R.id.recycle_view);
         swipeRefreshLayout = (SwipeRefreshLayout) latest_view.findViewById(R.id.refresh_widget);

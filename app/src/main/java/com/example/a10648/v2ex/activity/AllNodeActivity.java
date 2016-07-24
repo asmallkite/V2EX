@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllNodeActivity extends AppCompatActivity {
-    public static final String TAG = "AllNodeActivity";
 
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;

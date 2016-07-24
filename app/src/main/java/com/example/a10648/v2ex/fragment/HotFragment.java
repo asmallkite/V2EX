@@ -1,5 +1,6 @@
 package com.example.a10648.v2ex.fragment;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -49,6 +50,7 @@ public class HotFragment extends Fragment {
     RecyclerView recyclerView;
     MyRecyclerViewAdapter2 adapter2;
     SwipeRefreshLayout swipeRefreshLayout;
+    ProgressDialog progressDialog = null;
 
 
     public static final String Hot_URL ="https://www.v2ex.com/api/topics/hot.json";
@@ -70,6 +72,22 @@ public class HotFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View hot_view = LayoutInflater.from(getActivity()).inflate(R.layout.eye_hot_layout, container, false);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("客观，您的菜马上就好");
+        progressDialog.setMessage("来咯·······");
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }).start();
 
         recyclerView = (RecyclerView) hot_view.findViewById(R.id.recycle_view2);
         swipeRefreshLayout = (SwipeRefreshLayout) hot_view.findViewById(R.id.refresh);
@@ -119,13 +137,6 @@ public class HotFragment extends Fragment {
     public void initRecyclerView () {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
-//        if (MyApplication.isNetWorkConnected > 0){
-//            new MyTask().execute();
-//        } else {
-//            getDbData();
-//        }
 
         if (db.query("Topic2", null, null, null, null,  null, null).moveToFirst()) {
             getDbData();

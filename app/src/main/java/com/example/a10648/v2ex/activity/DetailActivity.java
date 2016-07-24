@@ -35,7 +35,6 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity  {
 
-    public static final String TAG = "DetailActivity";
 
     /*二级界面第二个cardView*/
     /*这块是文章正文 文字和图片，最多五张图片，文章里面不够五张，有几张显示几张*/
@@ -163,7 +162,6 @@ public class DetailActivity extends AppCompatActivity  {
         protected Bitmap doInBackground(Object... params) {
             String source = (String) params[0];
             mDrawable = (LevelListDrawable) params[1];
-            Log.d(TAG, "doInBackground " + source);
             try {
                 InputStream is = new URL(source).openStream();
                 return BitmapFactory.decodeStream(is);
@@ -180,8 +178,6 @@ public class DetailActivity extends AppCompatActivity  {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            Log.d(TAG, "onPostExecute drawable " + mDrawable);
-            Log.d(TAG, "onPostExecute bitmap " + bitmap);
             if (bitmap != null) {
                 BitmapDrawable d = new BitmapDrawable(bitmap);
                 mDrawable.addLevel(1, 1, d);
