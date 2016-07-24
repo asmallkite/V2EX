@@ -11,6 +11,10 @@
                     android:icon="@drawable/ic_menu_view"
                     android:checked="true"
                     android:title="@string/ic_menu_view"/>
+                <item
+                    android:id="@+id/ic_menu_all_node"
+                    android:icon="@drawable/ic_person"
+                    android:title="节点"/>
             </menu>
 
         </item>

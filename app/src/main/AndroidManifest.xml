@@ -32,7 +32,8 @@
         </receiver>
 
         <activity android:name=".activity.UserDetailActivity" />
-        <activity android:name=".activity.DetailActivity"></activity>
+        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.AllNodeActivity"></activity>
     </application>
 
 </manifest>

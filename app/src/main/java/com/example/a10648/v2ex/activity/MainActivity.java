@@ -81,6 +81,20 @@ public class MainActivity extends AppCompatActivity  {
                         }
                         Toast.makeText(MainActivity.this, "版本 ： 1.22.21", Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.ic_menu_all_node :
+                        if (ic_item_No != 3) {
+
+                        startActivity(new Intent(MainActivity.this, AllNodeActivity.class));
+                        item.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        ic_item_No = 3;
+                    } else {
+                            startActivity(new Intent(MainActivity.this, AllNodeActivity.class));
+
+                        drawerLayout.closeDrawers();
+                    }
+                        break;
+
                 }
 
                 return true;
