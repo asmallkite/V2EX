@@ -1,5 +1,6 @@
 package com.example.a10648.v2ex.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -38,11 +39,32 @@ public class AllNodeActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     RecyclerView recyclerView;
     List<Node> nodeList = new ArrayList<>();
+    ProgressDialog progressDialog = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_node2);
+
+
+        progressDialog = new ProgressDialog(AllNodeActivity.this);
+        progressDialog.setTitle("客观，您的菜马上就好");
+        progressDialog.setMessage("来咯·······");
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.dismiss();
+            }
+        }).start();
+
+
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.all_node_refresh);
         swipeRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light,
@@ -67,10 +89,15 @@ public class AllNodeActivity extends AppCompatActivity {
             }
         });
 
+
+
         recyclerView = (RecyclerView) findViewById(R.id.all_node_rv);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
+
+
         new MyTask().execute();
+
 
 
     }
@@ -87,7 +114,7 @@ public class AllNodeActivity extends AppCompatActivity {
             String header= null;
             String title= null;
             String avatar= null;
-           for (int i = 1; i < 50; i ++) {
+           for (int i = 1; i < 100; i ++) {
                try {
                    response = HttpConnect.sendRequestWithHttpURLConnection(base_url + i);
                   jsonObject = new JSONObject(response);
@@ -118,7 +145,6 @@ public class AllNodeActivity extends AppCompatActivity {
                 public void onItemClick(View view, Node data) {
                     Intent intent = new Intent(AllNodeActivity.this, UserDetailActivity.class);
                     intent.putExtra("url", data.getUrl());
-
                     startActivity(intent);
                 }
             });
