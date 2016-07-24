@@ -58,7 +58,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeViewHolder>  implement
 
         holder.title.setText(nodeList.get(position).getTitle());
         holder.header.setText(nodeList.get(position).getHeader());
-        holder.topics.setText(nodeList.get(position).getTopics() + "topics");
+        holder.topics.setText(nodeList.get(position).getTopics() + "  个主题");
         holder.itemView.setTag(nodeList.get(position));
 
     }
