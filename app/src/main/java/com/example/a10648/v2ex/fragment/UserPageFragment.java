@@ -24,9 +24,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 
 import org.json.JSONObject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 
 /**
  * Created by 10648 on 2016/7/16 0016.

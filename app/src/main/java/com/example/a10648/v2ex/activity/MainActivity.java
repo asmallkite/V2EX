@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity  {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
+    private long exitTime = 0; //再按一次退出程序用的
 
     private int ic_item_No;// DrawerLayout中菜单中的索引号
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity  {
         return true;
     }
 
-    private long exitTime = 0;
+
 
     @Override
     public void onBackPressed() {

@@ -125,7 +125,6 @@ public class JsoupFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        Log.e(TAG, "KA看你到底有没有执行");
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadFragment();
@@ -140,7 +139,6 @@ public class JsoupFragment extends Fragment {
             return;
         }
         initData();
-        Log.e(TAG, "KA看你到底有没有执行  w s  initdata");
         isFirstLoad = false;
     }
 
@@ -204,7 +202,6 @@ public class JsoupFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                Log.d(TAG, "\n setOnScrollListen 调用啦\n");
                 if (newState == RecyclerView.SCROLL_STATE_IDLE  && newState == RecyclerView.SCROLL_STATE_IDLE)
                     if (firstVisibleItem == 0 ){
                         swipeRefreshLayout.setRefreshing(true);

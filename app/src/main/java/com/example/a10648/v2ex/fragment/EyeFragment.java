@@ -16,9 +16,8 @@ import java.util.List;
 
 public class EyeFragment extends Fragment  {
 
-
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    ViewPager viewPager;
+    TabLayout tabLayout;
     private List<String> titles = new ArrayList<>();//页卡标题集合
     private List<Fragment> fragments = new ArrayList<>(); //fragment集合
 
@@ -53,11 +52,19 @@ public class EyeFragment extends Fragment  {
         titles.add("R2");
 
 
+        /**
+         * 用户主页的fragment
+         */
         UserPageFragment userPageFragment = new UserPageFragment();
+        /**
+         * 最新和最热的fragment，，用api获取
+         */
+        Fragment hotFragment = Hot_and_Latest_Fragment.newInstance(Hot_and_Latest_Fragment.Hot_URL);
+        Fragment latestFragment = Hot_and_Latest_Fragment.newInstance(Hot_and_Latest_Fragment.LATEST_URL);
 
-        HotFragment hotFragment = new HotFragment(); //最热主题的fragment
-        LatestFragment latestFragment = new LatestFragment();
-
+        /**
+         * 网络蜘蛛获取
+         */
         Fragment creative = JsoupFragment.newInstance(MyJsoup.CREATIVE);
         Fragment tech = JsoupFragment.newInstance(MyJsoup.TECH);
         Fragment play = JsoupFragment.newInstance(MyJsoup.PLAY);

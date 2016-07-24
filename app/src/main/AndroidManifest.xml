@@ -33,7 +33,7 @@
 
         <activity android:name=".activity.UserDetailActivity" />
         <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.AllNodeActivity"></activity>
+        <activity android:name=".activity.AllNodeActivity"/>
     </application>
 
 </manifest>
