@@ -1,5 +1,6 @@
 package com.example.a10648.v2ex.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.a10648.v2ex.R;
@@ -70,6 +72,7 @@ public class AllNodeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
         new MyTask().execute();
 
+
     }
     public class MyTask  extends AsyncTask<Void, Integer, List<Node>> {
 
@@ -108,7 +111,17 @@ public class AllNodeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Node> nodes) {
             super.onPostExecute(nodes);
-            recyclerView.setAdapter(new NodeAdapter(nodes, AllNodeActivity.this));
+            NodeAdapter adapter = new NodeAdapter(nodes, AllNodeActivity.this);
+            recyclerView.setAdapter(adapter);
+            adapter.setmOnItemClickListener(new NodeAdapter.OnRecycleViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, Node data) {
+                    Intent intent = new Intent(AllNodeActivity.this, UserDetailActivity.class);
+                    intent.putExtra("url", data.getUrl());
+
+                    startActivity(intent);
+                }
+            });
         }
     }
 }
