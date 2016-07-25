@@ -21,7 +21,7 @@ public class Presenter {
     }
 
     public void refresh (String tab_url) {
-        if (MyApplication.isNetWorkConnected > 0) {
+        if (MyApplication.isNetWorkConnected >= 0) {
             new RefreshTask().execute(tab_url);
         }
     }

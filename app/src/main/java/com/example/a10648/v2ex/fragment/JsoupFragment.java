@@ -231,10 +231,10 @@ public class JsoupFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(true);
             }
         });
-        if (MyApplication.isNetWorkConnected > 0){
+        //7/25将 网络判断删除
             presenter = new Presenter(this);
             presenter.refresh(tab_url);
-        }
+
 
     }
 
