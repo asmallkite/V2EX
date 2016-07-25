@@ -153,7 +153,8 @@ public class Hot_and_Latest_Fragment extends Fragment {
         if (db.query(table_name, null, null, null, null,  null, null).moveToFirst()) {
             getDbData();
         } else if (MyApplication.isNetWorkConnected == 0) {
-            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "啊哦， 网络开小差了", Toast.LENGTH_SHORT).show();
+            new MyTask().execute();
         } else {
             new MyTask().execute();
         }
