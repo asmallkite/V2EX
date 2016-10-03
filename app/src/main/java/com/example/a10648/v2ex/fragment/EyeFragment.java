@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.MyFragPaAdapter;
+import com.example.a10648.v2ex.fragment.add.TFragment;
 import com.example.a10648.v2ex.jsoup.MyJsoup;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class EyeFragment extends Fragment  {
         viewPager = (ViewPager)view.findViewById(R.id.viewpager);
         tabLayout = (TabLayout)view.findViewById(R.id.sliding_tabs);
 
+        titles.add("hot");
             /*根据id搜索用户主页*/
         titles.add("用户主页");
             /*根据API接口进行获取*/
@@ -52,6 +54,7 @@ public class EyeFragment extends Fragment  {
         titles.add("R2");
 
 
+        TFragment tFragment = new TFragment();
         /**
          * 用户主页的fragment
          */
@@ -78,6 +81,7 @@ public class EyeFragment extends Fragment  {
 
 
 
+        fragments.add(tFragment);
         fragments.add(userPageFragment);
 
         fragments.add(hotFragment);

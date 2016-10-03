@@ -15,12 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.activity.UserDetailActivity;
 import com.example.a10648.v2ex.model.UserModel;
 import com.example.a10648.v2ex.net.HttpConnect;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import org.json.JSONObject;
 
@@ -112,15 +111,7 @@ public class UserPageFragment extends Fragment  implements View.OnClickListener{
             user_name.setText("用户名： " + models.getUser_name());
             tagline.setText("签名：  " + models.getTagline());
             bio.setText("我的心情：  " + models.getBio());
-            ImageLoader.getInstance().loadImage(models.getAvatar_large(), new SimpleImageLoadingListener() {
-                @Override
-                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    super.onLoadingComplete(imageUri, view, loadedImage);
-                    avatarLarge.setImageBitmap(loadedImage);
-                }
-            });
-
-
+            Glide.with(getActivity()).load(models.getAvatar_large()).into(avatarLarge);
         }
 
     }

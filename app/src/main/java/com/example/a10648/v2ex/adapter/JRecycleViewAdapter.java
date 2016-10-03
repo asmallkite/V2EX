@@ -8,11 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.model.JtopicModel;
 import com.example.a10648.v2ex.widget.SelectorImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
 
 import java.util.List;
 
@@ -47,13 +47,8 @@ public class JRecycleViewAdapter extends RecyclerView.Adapter<JViewHolder> imple
 
     @Override
     public void onBindViewHolder(final JViewHolder holder, int position) {
-        ImageLoader.getInstance().loadImage(jtopicModelList.get(position).getJavatar(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                holder.avatar_iv.setImageBitmap(loadedImage);
-            }
-        });
+
+        Glide.with(context).load(jtopicModelList.get(position).getJavatar()).into(holder.avatar_iv);
 
         holder.title_tv.setText(jtopicModelList.get(position).getJtitle());
         holder.node_title_tv.setText(jtopicModelList.get(position).getJnodename());

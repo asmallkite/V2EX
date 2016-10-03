@@ -18,13 +18,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.adapter.JcommentAdapter;
 import com.example.a10648.v2ex.jsoup.DetailJsoup;
 import com.example.a10648.v2ex.model.CommentModel;
 import com.example.a10648.v2ex.widget.SelectorImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -85,13 +84,8 @@ public class DetailActivity extends AppCompatActivity  {
 
     private void display_card_1() {
         //显示二级界面图片
-        ImageLoader.getInstance().loadImage(getIntent().getStringExtra("avatar"), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                avatar.setImageBitmap(loadedImage);
-            }
-        });
+
+        Glide.with(this).load(getIntent().getStringExtra("avatar")).into(avatar);
         nodename.setText(getIntent().getStringExtra("node_name"));
         name.setText(getIntent().getStringExtra("name"));
         create.setText(getIntent().getStringExtra("create"));

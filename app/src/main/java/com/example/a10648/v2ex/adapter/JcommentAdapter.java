@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.model.CommentModel;
 import com.example.a10648.v2ex.widget.SelectorImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.List;
 
@@ -39,13 +38,8 @@ public class JcommentAdapter extends RecyclerView.Adapter<CommentViewHolder> {
 
     @Override
     public void onBindViewHolder(final CommentViewHolder holder, int position) {
-        ImageLoader.getInstance().loadImage(commentModelList.get(position).getAvatar(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                holder.avatar.setImageBitmap(loadedImage);
-            }
-        });
+
+        Glide.with(context).load(commentModelList.get(position).getAvatar()).into(holder.avatar);
         holder.name.setText(commentModelList.get(position).getName());
         holder.create.setText(commentModelList.get(position).getCreate());
         holder.comment.setText(commentModelList.get(position).getComment());

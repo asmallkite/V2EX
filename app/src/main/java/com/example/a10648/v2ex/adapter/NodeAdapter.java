@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
 import com.example.a10648.v2ex.model.Node;
 import com.example.a10648.v2ex.widget.SelectorImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +47,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeViewHolder>  implement
 
     @Override
     public void onBindViewHolder(final NodeViewHolder holder, int position) {
-        ImageLoader.getInstance().loadImage(nodeList.get(position).getAvatar_normal(), new SimpleImageLoadingListener() {
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                super.onLoadingComplete(imageUri, view, loadedImage);
-                holder.avatar_normal.setImageBitmap(loadedImage);
-            }
-        });
-
+        Glide.with(context).load(nodeList.get(position).getAvatar_normal()).into(holder.avatar_normal);
         holder.title.setText(nodeList.get(position).getTitle());
         holder.header.setText(nodeList.get(position).getHeader());
         holder.topics.setText(nodeList.get(position).getTopics() + "  个主题");
