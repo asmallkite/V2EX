@@ -2,6 +2,7 @@ package com.example.a10648.v2ex.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.a10648.v2ex.R;
-import com.example.a10648.v2ex.model.AMember;
 import com.example.a10648.v2ex.model.TModel;
 import com.example.a10648.v2ex.model.TopicModel;
 import com.example.a10648.v2ex.widget.RelativeTimeTextView;
@@ -51,11 +51,17 @@ public class TAdapter extends RecyclerView.Adapter<THolder> implements View.OnCl
     @Override
     public void onBindViewHolder(final THolder holder, int position) {
         holder.topic_title.setText(linkList.get(position).getTitle());
+//        holder.topic_title.setText("lizeheng");
         holder.topic_content.setText(linkList.get(position).getContent());
 
-//        AMember m = linkList.get(position).getMember();
-//        Glide.with(context).load(m.getAvatar()).into(holder.img_view_topic_head);
-//        holder.txt_view_topic_name.setText(m.getUsername());
+        Glide.with(context).load("https:" + linkList.get(position).getMember().getAvatar_large()).into(holder.img_view_topic_head);
+        Log.d("lizheng", linkList.get(position).getMember().getAvatar_large());
+        holder.txt_view_topic_name.setText(linkList.get(position).getMember().getUsername());
+        Log.d("lizheng", linkList.get(position).getMember().getUsername());
+        holder.txt_view_topic_node.setText(linkList.get(position).getNode().getName());
+
+
+
         holder.txt_view_topic_time.setReferenceTime(linkList.get(position).getCreated() * 1000);
         holder.txt_view_topic_replies.setText(String.valueOf(linkList.get(position).getReplies()) + "条 回复");
         holder.itemView.setTag(linkList.get(position));

@@ -77,6 +77,7 @@ public class TFragment extends BaseFragment implements ITFragment{
     @Override
     public void updateTopics(ArrayList<TModel> models) {
         adapter2.addItems(models);
+
     }
 
     @Override
